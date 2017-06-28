@@ -11,13 +11,9 @@ untappdClientSecret = process.env.UNTAPPD_CLIENT_SECRET || ''
 untappdApiRoot = "https://api.untappd.com/v4"
 
 beerbodsUntappdMap = {}
-if fs.existsSync '../beerbods-untappd-map.json'
-	file = fs.readFileSync '../beerbods-untappd-map.json', 'utf8'
+if fs.existsSync __dirname + '/../beerbods-untappd-map.json'
+	file = fs.readFileSync __dirname + '/../beerbods-untappd-map.json', 'utf8'
 	beerbodsUntappdMap = JSON.parse file
-else
-	console.error "../beerbods-untappd-map.json doesn't exist"
-	fs.readdirSync('../').forEach (file) ->
-		console.error file
 
 RETRY_ATTEMPT_TIMES = 3
 
