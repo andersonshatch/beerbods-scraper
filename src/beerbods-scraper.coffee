@@ -14,6 +14,10 @@ beerbodsUntappdMap = {}
 if fs.existsSync '../beerbods-untappd-map.json'
 	file = fs.readFileSync '../beerbods-untappd-map.json', 'utf8'
 	beerbodsUntappdMap = JSON.parse file
+else
+	console.error "../beerbods-untappd-map.json doesn't exist"
+	fs.readdirSync('../').forEach (file) ->
+		console.error file
 
 RETRY_ATTEMPT_TIMES = 3
 
