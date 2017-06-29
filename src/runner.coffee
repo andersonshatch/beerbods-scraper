@@ -1,3 +1,4 @@
+request = require "request"
 scraper = require './beerbods-scraper'
 
 
@@ -23,21 +24,23 @@ previousConfig = {
 }
 
 previousData = null
-if process.argv.length == 3 and process.argv[2].endsWith ".json"
-	previousData = require process.argv[2]
-	console.log previousData
+if process.argv.length == 3 and process.argv[2].startsWith("https://") and process.argv[2].endsWith(".json")
+	request process.argv[2], (error, response, body) ->
+		if !error and response.statusCode == 200
+			previousData = JSON.parse body
+			console.err "previous data successfully loaded"
 
 output = {}
 
-scraper.lookupBeer currentConfig, (response) ->
+scraper.scrapeBeerbods currentConfig, (response) ->
 	output.current = response
 	writer()
 
-scraper.lookupBeer nextConfig, (response) ->
+scraper.scrapeBeerbods nextConfig, (response) ->
 	output.next = response
 	writer()
 
-scraper.lookupBeer previousConfig, (response) ->
+scraper.scrapeBeerbods previousConfig, (response) ->
 	output.previous = response
 	writer()
 
@@ -48,7 +51,7 @@ resultsAreEqual = (aBeer, bBeer) ->
 		return false
 	if aBeer.beerbodsImageUrl != bBeer.beerbodsImageUrl
 		return false
-	if aBeer.brewery != bBeer.brewery
+	if aBeer.brewery.name != bBeer.brewery.name
 		return false
 
 	return true
@@ -62,8 +65,9 @@ writer = () ->
 	if previousData
 		for key in keys
 			if resultsAreEqual(previousData[key], output[key]) and !output[key].beers[0].untappd.detailUrl
-				console.err "substituting older untappd data for #{key}"
+				console.error "substituting older untappd data for #{key}"
 				output[key].beers[0].untappd = previousData[key].beers[0].untappd
+				output[key].brewery = previousData[key].brewery
 
 	console.log JSON.stringify output
 

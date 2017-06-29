@@ -15,9 +15,10 @@ if fs.existsSync __dirname + '/../beerbods-untappd-map.json'
 	file = fs.readFileSync __dirname + '/../beerbods-untappd-map.json', 'utf8'
 	beerbodsUntappdMap = JSON.parse file
 
+
 RETRY_ATTEMPT_TIMES = 3
 
-module.exports.lookupBeer = (config, completionHandler) ->
+module.exports.scrapeBeerbods = (config, completionHandler) ->
 	request beerbodsUrl + config.path, (error, response, body) ->
 		if error
 			console.error "beerbods", error
