@@ -28,7 +28,7 @@ if process.argv.length == 3 and process.argv[2].startsWith("https://") and proce
 	request process.argv[2], (error, response, body) ->
 		if !error and response.statusCode == 200
 			previousData = JSON.parse body
-			console.err "previous data successfully loaded"
+			console.error "previous data successfully loaded"
 
 output = {}
 
