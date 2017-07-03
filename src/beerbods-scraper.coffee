@@ -59,7 +59,8 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 				name: beer,
 				untappd: {
 					searchUrl: "https://untappd.com/search?q=" + encodeURIComponent(searchTerm),
-					match: "auto"
+					match: "auto",
+					lookupSuccessful: false
 				}
 			}],
 			fallback: text
@@ -144,6 +145,7 @@ lookupBeerOnUntappd = (untappdBeerId, slackMessage, untappd, completionHandler, 
 		responseBeer.rating = "#{humanize.numberFormat beer.rating_score} avg, #{humanize.numberFormat beer.rating_count, 0} #{pluralize 'rating', beer.rating_count}"
 		responseBeer.description = beer.beer_description
 		responseBeer.label = beer.beer_label
+		responseBeer.lookupSuccessful = true
 
 		completionHandler slackMessage
 
