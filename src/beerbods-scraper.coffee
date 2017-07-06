@@ -10,11 +10,18 @@ untappdClientId = process.env.UNTAPPD_CLIENT_ID || ''
 untappdClientSecret = process.env.UNTAPPD_CLIENT_SECRET || ''
 untappdApiRoot = "https://api.untappd.com/v4"
 
+beerbodsUntappdMapPath = __dirname + '/../beerbods-untappd-map.json'
+beerbodsNameOverrideMapPath = __dirname + '/../beerbods-name-override-map.json'
+
 beerbodsUntappdMap = {}
-if fs.existsSync __dirname + '/../beerbods-untappd-map.json'
-	file = fs.readFileSync __dirname + '/../beerbods-untappd-map.json', 'utf8'
+if fs.existsSync beerbodsUntappdMapPath
+	file = fs.readFileSync beerbodsUntappdMapPath
 	beerbodsUntappdMap = JSON.parse file
 
+beerbodsNameOverrideMap = {}
+if fs.existsSync beerbodsNameOverrideMapPath
+	file = fs.readFileSync beerbodsNameOverrideMapPath
+	beerbodsNameOverrideMap = JSON.parse file
 
 RETRY_ATTEMPT_TIMES = 3
 
@@ -33,6 +40,11 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 			console.error "beerbods beer not found - page layout unexpected"
 			completionHandler {}
 			return
+
+		if beerbodsNameOverrideMap[title]
+			newTitle = beerbodsNameOverrideMap[title]
+			console.error "Using name override #{title} -> #{newTitle}"
+			title = newTitle
 
 		beerUrl = beerbodsUrl + href
 
