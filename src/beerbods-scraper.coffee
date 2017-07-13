@@ -84,9 +84,9 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 			completionHandler slackMessage
 
 searchBeerOnUntappd = (beerTitle, slackMessage, untappd, completionHandler, retryCount = 0) ->
-	if beerbodsUntappdMap[beerTitle.toLowerCase]
+	if beerbodsUntappdMap[beerTitle.toLowerCase()]
 		slackMessage.beers[0].untappd.match = "manual"
-		lookupBeerOnUntappd beerbodsUntappdMap[beerTitle.toLowerCase], slackMessage, untappd, completionHandler
+		lookupBeerOnUntappd beerbodsUntappdMap[beerTitle.toLowerCase()], slackMessage, untappd, completionHandler
 		return
 
 	if retryCount == RETRY_ATTEMPT_TIMES
