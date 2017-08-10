@@ -158,6 +158,7 @@ lookupBeerOnUntappd = (untappdBeerId, slackMessage, untappd, completionHandler, 
 		responseBeer.description = beer.beer_description
 		responseBeer.label = beer.beer_label
 		responseBeer.lookupSuccessful = true
+		responseBeer.lookupStale = false
 
 		completionHandler slackMessage
 
