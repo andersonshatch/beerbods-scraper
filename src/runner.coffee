@@ -3,23 +3,14 @@ scraper = require './beerbods-scraper'
 
 
 currentConfig = {
-	weekDescriptor: 'This',
+	weekDescriptors: ['This week\'s', 'Next week\'s', 'The week after next\'s', '3 week\'s from now\'s'],
 	relativeDescriptor: 'is',
-	beerIndex: 0,
-	path: ''
-}
-
-nextConfig = {
-	weekDescriptor: 'Next',
-	relativeDescriptor: 'is',
-	beerIndex: 1,
 	path: ''
 }
 
 previousConfig = {
-	weekDescriptor: 'Last',
+	weekDescriptors: ['Last week\'s', '2 week\'s ago\'s', '3 week\'s ago\'s', '4 week\'s ago\'s'],
 	relativeDescriptor: 'was',
-	beerIndex: 0,
 	path: '/archive'
 }
 
@@ -36,10 +27,6 @@ scraper.scrapeBeerbods currentConfig, (response) ->
 	output.current = response
 	writer()
 
-scraper.scrapeBeerbods nextConfig, (response) ->
-	output.next = response
-	writer()
-
 scraper.scrapeBeerbods previousConfig, (response) ->
 	output.previous = response
 	writer()
@@ -51,13 +38,13 @@ resultsAreEqual = (aBeer, bBeer) ->
 		return false
 	if aBeer.beerbodsImageUrl != bBeer.beerbodsImageUrl
 		return false
-	if aBeer.brewery.name != bBeer.brewery.name
-		return false
+#	if aBeer.brewery.name != bBeer.brewery.name
+#		return false
 
 	return true
 
 writer = () ->
-	keys = ["previous", "current", "next"]
+	keys = ["previous", "current"]
 	for key in keys
 		if !output[key]
 			return

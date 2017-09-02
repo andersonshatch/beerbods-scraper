@@ -32,60 +32,94 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 			completionHandler {}
 			return
 		$ = cheerio.load body
-		div = $('div.beerofweek-container')
-		title = $('h3', div).eq(config.beerIndex).text()
-		href = $('a', div).eq(config.beerIndex).attr('href')
+		div = $('div.beerofweek-container').get()
+		output = []
+		for d, index in div
+			title = $('h3', d).text()
+			href = $('a', d).attr('href')
 
-		if !title or !href
-			console.error "beerbods beer not found - page layout unexpected"
-			completionHandler {}
-			return
+			if !title or !href
+				console.error "beerbods beer not found - page layout unexpected (index: #{index})"
+				continue
 
-		if beerbodsNameOverrideMap[title]
-			newTitle = beerbodsNameOverrideMap[title]
-			console.error "Using name override #{title} -> #{newTitle}"
-			title = newTitle
+			beerUrl = beerbodsUrl + href
 
-		beerUrl = beerbodsUrl + href
+			beerTitles = [title]
 
-		text = "#{config.weekDescriptor} week's beer #{config.relativeDescriptor} #{title} - #{beerUrl}"
+			if beerbodsNameOverrideMap[title]
+				override = beerbodsNameOverrideMap[title]
+				console.error "Using name override #{title} -> #{override}"
+				if Array.isArray(override)
+					beerTitles = override
+				else
+					beerTitles[0] = override
 
-		brewery = ''
-		beer = title
+			brewery = ''
 
-		searchTerm = title
-		if title.indexOf(',') != -1
-			components = title.split(',')
-			if components.length == 2
-				brewery = components[0].trim()
-				beer = components[1].trim()
+			beers = []
+			prefix = "#{config.weekDescriptors[index]} #{pluralize('beer', beerTitles.length)} #{pluralize(config.relativeDescriptor, beerTitles.length)}"
+			text = "#{prefix} #{title} - #{beerUrl}"
+
+			for beer in beerTitles
+				if beer.indexOf(',') != -1
+					components = beer.split(',')
+					if components.length == 2
+						brewery = components[0].trim()
+						beer = components[1].trim()
 				searchTerm = "#{brewery} #{beer}"
 
-		slackMessage = {
-			pretext: "#{config.weekDescriptor} week's beer:",
-			beerbodsCaption: title,
-			beerbodsUrl: beerUrl,
-			beerbodsImageUrl: beerbodsUrl + $('img', div).eq(config.beerIndex).attr("src"),
-			brewery: {name: brewery},
-			beers: [{
-				name: beer,
-				untappd: {
-					searchUrl: "https://untappd.com/search?q=" + encodeURIComponent(searchTerm),
-					match: "auto",
-					lookupSuccessful: false
+				beers.push {
+					name: beer,
+					untappd: {
+						searchUrl: "https://untappd.com/search?q=" + encodeURIComponent(searchTerm),
+						searchTerm: searchTerm,
+						match: "auto",
+						lookupSuccessful: false
+					},
+					brewery: {
+						name: brewery
+					}
 				}
-			}],
-			fallback: text
-		}
+
+			output.push {
+				pretext: "#{prefix}:",
+				beerbodsCaption: title,
+				beerbodsUrl: beerUrl,
+				beerbodsImageUrl: beerbodsUrl + $('img', d).attr("src"),
+				beers: beers,
+				fallback: text
+			}
 
 		if untappdClientId and untappdClientSecret
-			searchBeerOnUntappd searchTerm, slackMessage, {id: untappdClientId, secret: untappdClientSecret, apiRoot: untappdApiRoot}, completionHandler
+			populateUntappdData output, {id: untappdClientId, secret: untappdClientSecret, apiRoot: untappdApiRoot}, completionHandler
 		else
-			completionHandler slackMessage
+			completionHandler output
+
+populateUntappdData = (messages, untappd, completionHandler) ->
+	doneAtIteration = 0
+	messages.map (a) ->
+		doneAtIteration = doneAtIteration + a.beers.length
+
+	totalIteration = 0
+	output = []
+	for message, weekIteration in messages
+		output.push message
+		for beer, beerIteration in message.beers
+			beer.outputIndices = [weekIteration, beerIteration] #context for where to put this back when it returns in the callback
+			searchBeerOnUntappd beer.untappd.searchTerm, beer, untappd, (updatedMessage) ->
+				totalIteration = totalIteration + 1
+				outputIndices = updatedMessage.outputIndices
+				output[outputIndices[0]].beers[outputIndices[1]] = updatedMessage
+				delete output[outputIndices[0]].beers[outputIndices[1]].outputIndices #remove context now, not needed in final output
+				if totalIteration == doneAtIteration
+					completionHandler output
+					return
+
 
 searchBeerOnUntappd = (beerTitle, slackMessage, untappd, completionHandler, retryCount = 0) ->
+	console.error("searching for #{beerTitle}")
 	if beerbodsUntappdMap[beerTitle.toLowerCase()]
-		slackMessage.beers[0].untappd.match = "manual"
+		slackMessage.untappd.match = "manual"
 		lookupBeerOnUntappd beerbodsUntappdMap[beerTitle.toLowerCase()], slackMessage, untappd, completionHandler
 		return
 
@@ -122,43 +156,45 @@ searchBeerOnUntappd = (beerTitle, slackMessage, untappd, completionHandler, retr
 			return
 
 		untappdBeerId = data.response.beers.items[0].beer.bid
+		console.error("mapped #{beerTitle} to #{untappdBeerId}")
 		lookupBeerOnUntappd untappdBeerId, slackMessage, untappd, completionHandler
 
-lookupBeerOnUntappd = (untappdBeerId, slackMessage, untappd, completionHandler, retryCount = 0) ->
+lookupBeerOnUntappd = (untappdBeerId, message, untappd, completionHandler, retryCount = 0) ->
+	console.error("looking up #{untappdBeerId}")
 	if retryCount == RETRY_ATTEMPT_TIMES
-		completionHandler slackMessage
+		completionHandler message
 		return
 	request "#{untappd.apiRoot}/beer/info/#{untappdBeerId}?compact=true&client_id=#{untappd.id}&client_secret=#{untappd.secret}", (error, response, body) ->
 		if error or response.statusCode != 200
 			console.error "beerbods-untappd-beer-bid-#{untappdBeerId}", error ||= response.statusCode + body
-			lookupBeerOnUntappd untappdBeerId, slackMessage, untappd, completionHandler, retryCount + 1
+			lookupBeerOnUntappd untappdBeerId, message, untappd, completionHandler, retryCount + 1
 			return
 
 		try
 			data = JSON.parse body
 		catch error
 			console.error "beerbods-untappd-beer-baddata-bid-#{untappdBeerId}", body
-			lookupBeerOnUntappd untappdBeerId, slackMessage, untappd, completionHandler, retryCount + 1
+			lookupBeerOnUntappd untappdBeerId, message, untappd, completionHandler, retryCount + 1
 			return
 
 		if !data or !data?.response?.beer
 			console.error "beerbods-untappd-beer-baddata-bid-#{untappdBeerId}", body
-			lookupBeerOnUntappd untappdBeerId, slackMessage, untappd, completionHandler, retryCount + 1
+			lookupBeerOnUntappd untappdBeerId, message, untappd, completionHandler, retryCount + 1
 			return
 
 		beer = data.response.beer
 
-		slackMessage.brewery.logo = beer.brewery.brewery_label
-		slackMessage.brewery.url = "https://untappd.com/w/#{beer.brewery.brewery_slug}/#{beer.brewery.brewery_id}"
+		responseBeer = message
+		responseBeer.brewery.logo = beer.brewery.brewery_label
+		responseBeer.brewery.url = "https://untappd.com/w/#{beer.brewery.brewery_slug}/#{beer.brewery.brewery_id}"
+		untappd = responseBeer.untappd
+		untappd.detailUrl = "https://untappd.com/b/#{beer.beer_slug}/#{beer.bid}"
+		untappd.abv = "#{beer.beer_abv ||= 'N/A'}%"
+		untappd.rating = "#{humanize.numberFormat beer.rating_score} avg, #{humanize.numberFormat beer.rating_count, 0} #{pluralize 'rating', beer.rating_count}"
+		untappd.description = beer.beer_description
+		untappd.label = beer.beer_label
+		untappd.lookupSuccessful = true
+		untappd.lookupStale = false
 
-		responseBeer = slackMessage.beers[0].untappd
-		responseBeer.detailUrl = "https://untappd.com/b/#{beer.beer_slug}/#{beer.bid}"
-		responseBeer.abv = "#{beer.beer_abv ||= 'N/A'}%"
-		responseBeer.rating = "#{humanize.numberFormat beer.rating_score} avg, #{humanize.numberFormat beer.rating_count, 0} #{pluralize 'rating', beer.rating_count}"
-		responseBeer.description = beer.beer_description
-		responseBeer.label = beer.beer_label
-		responseBeer.lookupSuccessful = true
-		responseBeer.lookupStale = false
-
-		completionHandler slackMessage
+		completionHandler message
 
