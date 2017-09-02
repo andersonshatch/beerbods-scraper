@@ -35,6 +35,8 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 		div = $('div.beerofweek-container').get()
 		output = []
 		for d, index in div
+			if config.maxIndex and index > config.maxIndex
+				break
 			title = $('h3', d).text()
 			href = $('a', d).attr('href')
 
