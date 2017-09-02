@@ -3,6 +3,7 @@ humanize = require "humanize"
 pluralize = require "pluralize"
 request = require "request"
 fs = require "fs"
+util = require "util"
 
 beerbodsUrl = 'https://beerbods.co.uk'
 
@@ -59,7 +60,8 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 			brewery = ''
 
 			beers = []
-			prefix = "#{config.weekDescriptors[index]} #{pluralize('beer', beerTitles.length)} #{pluralize(config.relativeDescriptor, beerTitles.length)}"
+			formattedDescriptor = util.format(config.weekDescriptors[index], pluralize('beer', beerTitles.length))
+			prefix = "#{formattedDescriptor} #{pluralize(config.relativeDescriptor, beerTitles.length)}"
 			text = "#{prefix} #{title} - #{beerUrl}"
 
 			for beer in beerTitles

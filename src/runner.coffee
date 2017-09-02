@@ -3,14 +3,14 @@ scraper = require './beerbods-scraper'
 
 
 currentConfig = {
-	weekDescriptors: ['This week\'s', 'Next week\'s', 'The week after next\'s', '3 week\'s from now\'s'],
+	weekDescriptors: ['This week\'s %s', 'Next week\'s %s', 'In 2 week\'s the %s', 'In 3 week\'s the %s'],
 	relativeDescriptor: 'is',
 	path: '',
 	maxIndex: 3
 }
 
 previousConfig = {
-	weekDescriptors: ['Last week\'s', '2 week\'s ago\'s', '3 week\'s ago\'s', '4 week\'s ago\'s'],
+	weekDescriptors: ['Last week\'s %s', '2 week\'s ago the %s', '3 week\'s ago the %s', '4 week\'s ago the %s'],
 	relativeDescriptor: 'was',
 	path: '/archive',
 	maxIndex: 3
