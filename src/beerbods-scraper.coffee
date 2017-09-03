@@ -189,6 +189,7 @@ lookupBeerOnUntappd = (untappdBeerId, message, untappd, completionHandler, retry
 		responseBeer.brewery.logo = beer.brewery.brewery_label
 		responseBeer.brewery.url = "https://untappd.com/w/#{beer.brewery.brewery_slug}/#{beer.brewery.brewery_id}"
 		untappd = responseBeer.untappd
+		untappd.bid = beer.bid
 		untappd.detailUrl = "https://untappd.com/b/#{beer.beer_slug}/#{beer.bid}"
 		untappd.abv = "#{beer.beer_abv ||= 'N/A'}%"
 		untappd.rating = "#{humanize.numberFormat beer.rating_score} avg, #{humanize.numberFormat beer.rating_count, 0} #{pluralize 'rating', beer.rating_count}"
