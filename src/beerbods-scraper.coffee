@@ -62,7 +62,7 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 			beers = []
 			formattedDescriptor = util.format(config.weekDescriptors[index], pluralize('beer', beerTitles.length))
 			prefix = "#{formattedDescriptor} #{pluralize(config.relativeDescriptor, beerTitles.length)}"
-			text = "#{prefix} #{title}"
+			text = "#{prefix} #{beerTitles.join(' and/or ')}"
 
 			for beer in beerTitles
 				if beer.indexOf(',') != -1
