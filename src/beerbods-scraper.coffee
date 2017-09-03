@@ -194,6 +194,7 @@ lookupBeerOnUntappd = (untappdBeerId, message, untappd, completionHandler, retry
 		untappd.abv = "#{beer.beer_abv ||= 'N/A'}%"
 		untappd.rating = "#{humanize.numberFormat beer.rating_score} avg, #{humanize.numberFormat beer.rating_count, 0} #{pluralize 'rating', beer.rating_count}"
 		untappd.description = beer.beer_description
+		untappd.style = beer.beer_style
 		untappd.label = beer.beer_label
 		untappd.lookupSuccessful = true
 		untappd.lookupStale = false
