@@ -62,7 +62,7 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 			beers = []
 			formattedDescriptor = util.format(config.weekDescriptors[index], pluralize('beer', beerTitles.length))
 			prefix = "#{formattedDescriptor} #{pluralize(config.relativeDescriptor, beerTitles.length)}"
-			text = "#{prefix} #{title} - #{beerUrl}"
+			text = "#{prefix} #{title}"
 
 			for beer in beerTitles
 				if beer.indexOf(',') != -1
@@ -91,7 +91,7 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 				beerbodsUrl: beerUrl,
 				beerbodsImageUrl: beerbodsUrl + $('img', d).attr("src"),
 				beers: beers,
-				fallback: text
+				summary: text
 			}
 
 		if untappdClientId and untappdClientSecret
