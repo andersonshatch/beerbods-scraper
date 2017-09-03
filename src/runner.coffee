@@ -53,13 +53,17 @@ writer = () ->
 
 	if previousData
 		for key in keys
-			if resultsAreEqual(previousData[key], output[key])
-				for beer, index in output[key].beers
-					if !beer.untappd.detailUrl
-						console.error "substituting older untappd data for #{key}[#{index}]"
-						beer.untappd = previousData[key].beers[index].untappd
-						beer.untappd.lookupStale = true
-						output[key].brewery = previousData[key].brewery
+			for week, weekIndex in output[key]
+				previous = previousData[key][weekIndex]
+				continue unless previous
+				if resultsAreEqual(previous, week)
+					for beer, beerIndex in week.beers
+						if !beer.untappd.detailUrl
+							previousBeer = previous.beers[beerIndex]
+							console.error "substituting older untappd data for #{key}[#{weekIndex}][#{beerIndex}] - #{previousBeer.name}"
+							beer.untappd = previousBeer.untappd
+							beer.untappd.lookupStale = true
+							beer.brewery = previousBeer.brewery
 
 	console.log JSON.stringify output
 
