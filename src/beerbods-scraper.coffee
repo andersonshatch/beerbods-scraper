@@ -121,7 +121,6 @@ populateUntappdData = (messages, untappd, completionHandler) ->
 
 
 searchBeerOnUntappd = (beerTitle, slackMessage, untappd, completionHandler, retryCount = 0) ->
-	console.error("searching for #{beerTitle}")
 	if beerbodsUntappdMap[beerTitle.toLowerCase()]
 		slackMessage.untappd.match = "manual"
 		lookupBeerOnUntappd beerbodsUntappdMap[beerTitle.toLowerCase()], slackMessage, untappd, completionHandler
@@ -160,11 +159,9 @@ searchBeerOnUntappd = (beerTitle, slackMessage, untappd, completionHandler, retr
 			return
 
 		untappdBeerId = data.response.beers.items[0].beer.bid
-		console.error("mapped #{beerTitle} to #{untappdBeerId}")
 		lookupBeerOnUntappd untappdBeerId, slackMessage, untappd, completionHandler
 
 lookupBeerOnUntappd = (untappdBeerId, message, untappd, completionHandler, retryCount = 0) ->
-	console.error("looking up #{untappdBeerId}")
 	if retryCount == RETRY_ATTEMPT_TIMES
 		completionHandler message
 		return
