@@ -1,6 +1,7 @@
 request = require "request"
+fs = require "fs"
+rimraf = require "rimraf"
 scraper = require './beerbods-scraper'
-
 
 currentConfig = {
 	weekDescriptors: ['This week\'s %s', 'Next week\'s %s', 'In 2 week\'s the %s', 'In 3 week\'s the %s'],
@@ -65,6 +66,12 @@ writer = () ->
 							beer.untappd.lookupStale = true
 							beer.brewery = previousBeer.brewery
 
-	console.log JSON.stringify output
+	rimraf.sync __dirname + "/../site/*"
+	for key in keys
+		fs.mkdirSync __dirname + "/../site/#{key}"
+		fs.writeFileSync __dirname + "/../site/#{key}.json", JSON.stringify(output[key])
+		for week, index in output[key]
+			fs.writeFileSync __dirname + "/../site/#{key}/#{index}.json", JSON.stringify(week)
 
+	fs.writeFileSync __dirname + "/../site/beerbods.json", JSON.stringify(output)
 
