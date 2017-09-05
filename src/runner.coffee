@@ -37,8 +37,6 @@ resultsAreEqual = (aBeer, bBeer) ->
 		return false
 	if aBeer.beerbodsImageUrl != bBeer.beerbodsImageUrl
 		return false
-#	if aBeer.brewery.name != bBeer.brewery.name
-#		return false
 
 	return true
 
