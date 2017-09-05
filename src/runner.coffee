@@ -66,12 +66,14 @@ writer = () ->
 							beer.untappd.lookupStale = true
 							beer.brewery = previousBeer.brewery
 
-	rimraf.sync __dirname + "/../site/*"
-	for key in keys
-		fs.mkdirSync __dirname + "/../site/#{key}"
-		fs.writeFileSync __dirname + "/../site/#{key}.json", JSON.stringify(output[key])
-		for week, index in output[key]
-			fs.writeFileSync __dirname + "/../site/#{key}/#{index}.json", JSON.stringify(week)
+	outdir = "#{__dirname}/../site/v1"
 
-	fs.writeFileSync __dirname + "/../site/beerbods.json", JSON.stringify(output)
+	rimraf.sync "#{outdir}/*"
+	for key in keys
+		fs.mkdirSync "#{outdir}/#{key}"
+		fs.writeFileSync "#{outdir}/#{key}.json", JSON.stringify(output[key])
+		for week, index in output[key]
+			fs.writeFileSync "#{outdir}/#{key}/#{index}.json", JSON.stringify(week)
+
+	fs.writeFileSync "#{outdir}/beerbods.json", JSON.stringify(output)
 
