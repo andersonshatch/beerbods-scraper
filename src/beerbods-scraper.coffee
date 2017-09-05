@@ -120,31 +120,31 @@ populateUntappdData = (messages, untappd, completionHandler) ->
 					return
 
 
-searchBeerOnUntappd = (beerTitle, slackMessage, untappd, completionHandler, retryCount = 0) ->
+searchBeerOnUntappd = (beerTitle, message, untappd, completionHandler, retryCount = 0) ->
 	if beerbodsUntappdMap[beerTitle.toLowerCase()]
-		slackMessage.untappd.match = "manual"
-		lookupBeerOnUntappd beerbodsUntappdMap[beerTitle.toLowerCase()], slackMessage, untappd, completionHandler
+		message.untappd.match = "manual"
+		lookupBeerOnUntappd beerbodsUntappdMap[beerTitle.toLowerCase()], message, untappd, completionHandler
 		return
 
 	if retryCount == RETRY_ATTEMPT_TIMES
-		completionHandler slackMessage
+		completionHandler message
 		return
 	request "#{untappd.apiRoot}/search/beer?q=#{encodeURIComponent beerTitle}&limit=5&client_id=#{untappd.id}&client_secret=#{untappd.secret}", (error, response, body) ->
 		if error or response.statusCode != 200 or !body
 			console.error "beerbods-untappd-search", error ||= response.statusCode + body
-			searchBeerOnUntappd beerTitle, slackMessage, untappd, completionHandler, retryCount + 1
+			searchBeerOnUntappd beerTitle, message, untappd, completionHandler, retryCount + 1
 			return
 
 		try
 			data = JSON.parse body
 		catch error
 			console.error "beerbods-untappd-search", error
-			searchBeerOnUntappd beerTitle, slackMessage, untappd, completionHandler, retryCount + 1
+			searchBeerOnUntappd beerTitle, message, untappd, completionHandler, retryCount + 1
 			return
 
 		if !data or !data?.response?.beers?.items
 			console.error "beerbods-untappd-search-no-data", body
-			searchBeerOnUntappd beerTitle, slackMessage, untappd, completionHandler, retryCount + 1
+			searchBeerOnUntappd beerTitle, message, untappd, completionHandler, retryCount + 1
 
 			return
 
@@ -155,11 +155,11 @@ searchBeerOnUntappd = (beerTitle, slackMessage, untappd, completionHandler, retr
 
 		if beers.length != 1
 			#Unsure which to pick, so bail and leave the search link
-			completionHandler slackMessage
+			completionHandler message
 			return
 
 		untappdBeerId = data.response.beers.items[0].beer.bid
-		lookupBeerOnUntappd untappdBeerId, slackMessage, untappd, completionHandler
+		lookupBeerOnUntappd untappdBeerId, message, untappd, completionHandler
 
 lookupBeerOnUntappd = (untappdBeerId, message, untappd, completionHandler, retryCount = 0) ->
 	if retryCount == RETRY_ATTEMPT_TIMES
