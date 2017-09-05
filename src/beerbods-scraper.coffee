@@ -26,8 +26,13 @@ if fs.existsSync beerbodsNameOverrideMapPath
 
 RETRY_ATTEMPT_TIMES = 3
 
+class Config
+	constructor: (@weekDescriptors, @relativeDescriptor, @beerbodsPath = "", @maxIndex = 3) ->
+
+module.exports.config = Config
+
 module.exports.scrapeBeerbods = (config, completionHandler) ->
-	request beerbodsUrl + config.path, (error, response, body) ->
+	request beerbodsUrl + config.beerbodsPath, (error, response, body) ->
 		if error
 			console.error "beerbods", error
 			completionHandler {}
@@ -36,7 +41,7 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 		div = $('div.beerofweek-container').get()
 		output = []
 		for d, index in div
-			if config.maxIndex and index > config.maxIndex
+			if index > config.maxIndex
 				break
 			title = $('h3', d).text()
 			href = $('a', d).attr('href')

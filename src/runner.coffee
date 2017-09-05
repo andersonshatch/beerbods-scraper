@@ -3,19 +3,15 @@ fs = require "fs"
 rimraf = require "rimraf"
 scraper = require './beerbods-scraper'
 
-currentConfig = {
-	weekDescriptors: ['This week\'s %s', 'Next week\'s %s', 'In 2 week\'s the %s', 'In 3 week\'s the %s'],
-	relativeDescriptor: 'is',
-	path: '',
-	maxIndex: 3
-}
+currentConfig = new scraper.config \
+	['This week\'s %s', 'Next week\'s %s', 'In 2 week\'s the %s', 'In 3 week\'s the %s'], \
+	'is'
 
-previousConfig = {
-	weekDescriptors: ['Last week\'s %s', '2 week\'s ago the %s', '3 week\'s ago the %s', '4 week\'s ago the %s'],
-	relativeDescriptor: 'was',
-	path: '/archive',
-	maxIndex: 3
-}
+previousConfig = new scraper.config \
+	['Last week\'s %s', '2 week\'s ago the %s', '3 week\'s ago the %s', '4 week\'s ago the %s'],
+	'was', \
+	'/archive', \
+	3
 
 previousData = null
 if process.argv.length == 3 and process.argv[2].startsWith("https://") and process.argv[2].endsWith(".json")
