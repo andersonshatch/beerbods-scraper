@@ -9,6 +9,7 @@ beerbodsUrl = 'https://beerbods.co.uk'
 
 untappdClientId = process.env.UNTAPPD_CLIENT_ID || ''
 untappdClientSecret = process.env.UNTAPPD_CLIENT_SECRET || ''
+untappdAccessToken = process.env.UNTAPPD_ACCESS_TOKEN || ''
 untappdApiRoot = "https://api.untappd.com/v4"
 
 beerbodsUntappdMapPath = __dirname + '/../beerbods-untappd-map.json'
@@ -100,7 +101,8 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 			}
 
 		if untappdClientId and untappdClientSecret
-			populateUntappdData output, {id: untappdClientId, secret: untappdClientSecret, apiRoot: untappdApiRoot}, completionHandler
+			untappd = {id: untappdClientId, secret: untappdClientSecret, accessToken: untappdAccessToken, apiRoot: untappdApiRoot}
+			populateUntappdData output, untappd, completionHandler
 		else
 			completionHandler output
 
@@ -124,6 +126,8 @@ populateUntappdData = (messages, untappd, completionHandler) ->
 					completionHandler output
 					return
 
+untappdAuthParams = (untappdConfig) ->
+	return "client_id=#{untappdConfig.id}&client_secret=#{untappdConfig.secret}&access_token=#{untappdConfig.accessToken}"
 
 searchBeerOnUntappd = (beerTitle, message, untappd, completionHandler, retryCount = 0) ->
 	if beerbodsUntappdMap[beerTitle.toLowerCase()]
@@ -134,7 +138,7 @@ searchBeerOnUntappd = (beerTitle, message, untappd, completionHandler, retryCoun
 	if retryCount == RETRY_ATTEMPT_TIMES
 		completionHandler message
 		return
-	request "#{untappd.apiRoot}/search/beer?q=#{encodeURIComponent beerTitle}&limit=5&client_id=#{untappd.id}&client_secret=#{untappd.secret}", (error, response, body) ->
+	request "#{untappd.apiRoot}/search/beer?q=#{encodeURIComponent beerTitle}&limit=5&#{untappdAuthParams(untappd)}", (error, response, body) ->
 		if error or response.statusCode != 200 or !body
 			console.error "beerbods-untappd-search", error ||= response.statusCode + body
 			searchBeerOnUntappd beerTitle, message, untappd, completionHandler, retryCount + 1
@@ -170,7 +174,7 @@ lookupBeerOnUntappd = (untappdBeerId, message, untappd, completionHandler, retry
 	if retryCount == RETRY_ATTEMPT_TIMES
 		completionHandler message
 		return
-	request "#{untappd.apiRoot}/beer/info/#{untappdBeerId}?compact=true&client_id=#{untappd.id}&client_secret=#{untappd.secret}", (error, response, body) ->
+	request "#{untappd.apiRoot}/beer/info/#{untappdBeerId}?compact=true&#{untappdAuthParams(untappd)}", (error, response, body) ->
 		if error or response.statusCode != 200
 			console.error "beerbods-untappd-beer-bid-#{untappdBeerId}", error ||= response.statusCode + body
 			lookupBeerOnUntappd untappdBeerId, message, untappd, completionHandler, retryCount + 1
