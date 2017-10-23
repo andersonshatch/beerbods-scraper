@@ -1,0 +1,2 @@
+/bimg/*
+	Access-Control-Allow-Origin: *
