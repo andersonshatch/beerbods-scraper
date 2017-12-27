@@ -33,9 +33,8 @@ class Config
 module.exports.config = Config
 
 module.exports.scrapeBeerbods = (config, completionHandler) ->
-	request beerbodsUrl + config.beerbodsPath, (error, response, body) ->
-		if error
-			console.error "beerbods", error
+		if error or response.statusCode != 200
+			console.error "beerbods", error || response.statusCode
 			completionHandler {}
 			return
 		$ = cheerio.load body
