@@ -12,6 +12,8 @@ untappdClientSecret = process.env.UNTAPPD_CLIENT_SECRET || ''
 untappdAccessToken = process.env.UNTAPPD_ACCESS_TOKEN || ''
 untappdApiRoot = "https://api.untappd.com/v4"
 
+beerbodsLoadTimeout = process.env.BEERBODS_LOAD_TIMEOUT || 3000
+
 beerbodsUntappdMapPath = __dirname + '/../beerbods-untappd-map.json'
 beerbodsNameOverrideMapPath = __dirname + '/../beerbods-name-override-map.json'
 
@@ -33,6 +35,7 @@ class Config
 module.exports.config = Config
 
 module.exports.scrapeBeerbods = (config, completionHandler) ->
+	request beerbodsUrl + config.beerbodsPath, {timeout: beerbodsLoadTimeout}, (error, response, body) ->
 		if error or response.statusCode != 200
 			console.error "beerbods", error || response.statusCode
 			completionHandler {}
