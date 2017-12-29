@@ -38,7 +38,7 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 	request beerbodsUrl + config.beerbodsPath, {timeout: beerbodsLoadTimeout}, (error, response, body) ->
 		if error or response.statusCode != 200
 			console.error "beerbods", error || response.statusCode
-			completionHandler {}
+			completionHandler []
 			return
 		$ = cheerio.load body
 		div = $('div.beerofweek-container').get()

@@ -51,6 +51,11 @@ writer = () ->
 
 	if previousData
 		for key in keys
+			if !output[key] or output[key].length == 0
+				console.error "'#{key}' output is empty, substituting entire old '#{key}' data"
+				output[key] = previousData[key]
+				continue
+
 			for week, weekIndex in output[key]
 				previous = previousData[key][weekIndex]
 				continue unless previous
