@@ -14,24 +14,29 @@ previousConfig = new scraper.config \
 	3
 
 previousData = null
+output = {}
+
 if process.argv.length == 3 and process.argv[2].startsWith("https://") and process.argv[2].endsWith(".json")
 	request process.argv[2], (error, response, body) ->
 		if !error and response.statusCode == 200
 			try
 				previousData = JSON.parse body
 				console.error "previous data successfully loaded"
+				scrape()
 			catch error
 				console.error "previous data parsing error", error
+				scrape()
+else
+	scrape()
 
-output = {}
+scrape = () ->
+	scraper.scrapeBeerbods currentConfig, (response) ->
+		output.current = response
+		writer()
 
-scraper.scrapeBeerbods currentConfig, (response) ->
-	output.current = response
-	writer()
-
-scraper.scrapeBeerbods previousConfig, (response) ->
-	output.previous = response
-	writer()
+	scraper.scrapeBeerbods previousConfig, (response) ->
+		output.previous = response
+		writer()
 
 resultsAreEqual = (aBeer, bBeer) ->
 	if aBeer.beerbodsCaption != bBeer.beerbodsCaption
