@@ -26,6 +26,9 @@ if process.argv.length == 3 and process.argv[2].startsWith("https://") and proce
 			catch error
 				console.error "previous data parsing error", error
 				scrape()
+		else
+			console.error "previous data error", error || response.statusCode
+			scrape()
 else
 	scrape()
 
