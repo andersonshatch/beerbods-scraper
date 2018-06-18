@@ -1,0 +1,34 @@
+[
+  {
+    "pretext": "This week's test beer shall be:",
+    "beerbodsCaption": "Beer?, The Dharma Initiative",
+    "beerbodsUrl": "https://beerbods.co.uk/this-weeks-beer/beer-dharma-initiative",
+    "summary": "This week's test beer shall be Beer?, The Dharma Initiative",
+    "beerbodsImageUrl": "https://beerbods.co.uk/media/108/bottle.png",
+    "beers": [
+      {
+        "brewery": {
+          "name": "Beer?",
+          "logo": "https://untappd.com/dharma.png",
+          "url": "https://untappd.com/w/dharma-initiative/4815162342"
+        },
+        "name": "The Dharma Initiative",
+        "untappd": {
+          "lookupSuccessful": true,
+          "lookupStale": false,
+          "match": "auto",
+          "searchTerm": "Beer? The Dharma Initiative",
+          "searchUrl": "https://untappd.com/search?q=Beer%3F%20The%20Dharma%20Initiative",
+          "bid": 481516,
+          "detailUrl": "https://untappd.com/b/dharma-initiative-beer/481516",
+          "mobileDeepUrl": "https://untappd.com/qr/beer/481516",
+          "abv": "N/A%",
+          "rating": "4.82 avg, 1 rating",
+          "description": "Don't tell us what we can't brew",
+          "style": "BEER",
+          "label": "https://untappd.com/beer-dharma-initiative.png"
+        }
+      }
+    ]
+  }
+]

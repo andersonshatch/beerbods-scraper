@@ -1,0 +1,44 @@
+[
+  {
+    "pretext": "This week's test beer shall be:",
+    "beerbodsCaption": "Beer?, The Dharma Initiative",
+    "beerbodsUrl": "https://beerbods.co.uk/this-weeks-beer/beer-dharma-initiative",
+    "summary": "This week's test beer shall be Beer?, The Dharma Initiative",
+    "beerbodsImageUrl": "https://beerbods.co.uk/media/108/bottle.png",
+    "beers": [
+      {
+        "brewery": {
+          "name": "Beer?"
+        },
+        "name": "The Dharma Initiative",
+        "untappd": {
+          "lookupSuccessful": false,
+          "match": "auto",
+          "searchTerm": "Beer? The Dharma Initiative",
+          "searchUrl": "https://untappd.com/search?q=Beer%3F%20The%20Dharma%20Initiative"
+        }
+      }
+    ]
+  },
+  {
+    "pretext": "Next week's test beer shall be:",
+    "beerbodsCaption": "Dalrympley, Hikin",
+    "beerbodsUrl": "https://beerbods.co.uk/this-weeks-beer/dalrymple-hikin",
+    "summary": "Next week's test beer shall be Dalrympley, Hikin",
+    "beerbodsImageUrl": "https://beerbods.co.uk/media/1864/bottle.png",
+    "beers": [
+      {
+        "brewery": {
+          "name": "Dalrympley"
+        },
+        "name": "Hikin",
+        "untappd": {
+          "lookupSuccessful": false,
+          "match": "auto",
+          "searchTerm": "Dalrympley Hikin",
+          "searchUrl": "https://untappd.com/search?q=Dalrympley%20Hikin"
+        }
+      }
+    ]
+  }
+]

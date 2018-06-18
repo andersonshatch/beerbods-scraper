@@ -22,7 +22,14 @@
     "rimraf": "^2.6.1"
   },
   "homepage": "https://github.com/andersonshatch/beerbods-scraper#readme",
+  "scripts": {
+    "test": "npm run test-unit",
+    "test-unit": "mocha --compilers coffee:coffee-script/register test/beerbods-api-unit.coffee && mocha --compilers coffee:coffee-script/register test/beerbods-api-untappd-unit.coffee"
+  },
   "devDependencies": {
-    "coffee-script": "^1.12.7"
+    "chai": "^4.1.2",
+    "coffee-script": "^1.12.7",
+    "mocha": "^5.2.0",
+    "nock": "^9.3.3"
   }
 }

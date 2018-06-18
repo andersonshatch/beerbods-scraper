@@ -1,0 +1,20 @@
+{
+  "response": {
+    "beer": {
+      "bid": 481516,
+      "beer_name": "Beer?",
+      "beer_abv": 5,
+      "beer_description": "Don't tell us what we can't brew",
+      "beer_slug": "dharma-initiative-beer",
+      "beer_style": "BEER",
+      "beer_label": "https://untappd.com/beer-dharma-initiative.png",
+      "rating_count": 108,
+      "rating_score": 4.815,
+      "brewery": {
+        "brewery_label": "https://untappd.com/dharma.png",
+        "brewery_id": 4815162342,
+        "brewery_slug": "dharma-initiative"
+      }
+    }
+  }
+}

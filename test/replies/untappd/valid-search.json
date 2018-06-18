@@ -1,0 +1,16 @@
+{
+    "response": {
+        "found": 1,
+        "beers": {
+            "count": 1,
+            "items": [
+                {
+                    "beer": {
+                        "bid": 481516,
+                        "in_production": 1
+                    }
+                }
+            ]
+        }
+    }
+}
