@@ -248,7 +248,7 @@ describe 'beerbods api with untappd credentials and manual mapping', ->
 		@nockUntappd = nock("https://api.untappd.com")
 		global.nockBeerbodsSite = nock("https://beerbods.co.uk")
 			.get("/thebeers")
-			.replyWithFile(200, __dirname + '/replies/valid-needing-name-override.html')
+			.replyWithFile(200, __dirname + '/replies/valid-needing-manual-map.html')
 
 	afterEach ->
 		@nockUntappd.done()
