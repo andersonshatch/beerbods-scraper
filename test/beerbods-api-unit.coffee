@@ -75,3 +75,23 @@ describe 'beerbods api without untappd credentials', ->
 				expect(output).to.not.be.null
 				expect(output).to.have.length 0
 				do done
+
+describe 'beerbods api without untappd credentials uses name override', ->
+	config = new scraper.config(["This week's test", "Next week's test"], "shall be", '/thebeers')
+	attachment = require './expected/current-output-sans-untappd-manual-map.json'
+
+	context 'mock beerbods returns page with expected layout', ->
+		beforeEach ->
+			global.nockBeerbodsSite = nock("https://beerbods.co.uk")
+				.get("/thebeers")
+				.replyWithFile(200, __dirname + '/replies/valid-needing-name-override.html')
+
+		it 'produces json with info on 2 weeks beers using the name override', (done) ->
+			output = null
+			scraper.scrapeBeerbods config, (result) ->
+				output = result
+				expect(output).to.not.be.null
+				expect(output).to.have.length 1
+
+				expect(output).to.eql(attachment)
+				do done

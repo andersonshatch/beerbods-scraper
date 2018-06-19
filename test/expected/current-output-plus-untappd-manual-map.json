@@ -1,0 +1,34 @@
+[
+  {
+    "pretext": "This week's test beer shall be:",
+    "beerbodsCaption": "Sambrooks Brewery, Battersea Rye",
+    "beerbodsUrl": "https://beerbods.co.uk/this-weeks-beer/battersea-rye",
+    "summary": "This week's test beer shall be Sambrooks Brewery, Battersea Rye",
+    "beerbodsImageUrl": "https://beerbods.co.uk/media/108/bottle.png",
+    "beers": [
+      {
+        "brewery": {
+          "name": "Sambrooks Brewery",
+          "logo": "https://untappd.com/dharma.png",
+          "url": "https://untappd.com/w/dharma-initiative/4815162342"
+        },
+        "name": "Battersea Rye",
+        "untappd": {
+          "lookupSuccessful": true,
+          "lookupStale": false,
+          "match": "manual",
+          "searchTerm": "Sambrooks Brewery Battersea Rye",
+          "searchUrl": "https://untappd.com/search?q=Sambrooks%20Brewery%20Battersea%20Rye",
+          "bid": 481516,
+          "detailUrl": "https://untappd.com/b/dharma-initiative-beer/481516",
+          "mobileDeepUrl": "https://untappd.com/qr/beer/481516",
+          "abv": "5%",
+          "rating": "4.82 avg, 108 ratings",
+          "description": "Don't tell us what we can't brew",
+          "style": "BEER",
+          "label": "https://untappd.com/beer-dharma-initiative.png"
+        }
+      }
+    ]
+  }
+]

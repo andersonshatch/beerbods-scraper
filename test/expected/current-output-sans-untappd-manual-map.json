@@ -1,0 +1,23 @@
+[
+  {
+    "pretext": "This week's test beer shall be:",
+    "beerbodsCaption": "& UNION",
+    "beerbodsUrl": "https://beerbods.co.uk/this-weeks-beer/summer-wheat-ale",
+    "summary": "This week's test beer shall be And Union, Summer Wheat Ale",
+    "beerbodsImageUrl": "https://beerbods.co.uk/media/117/bottle.png",
+    "beers": [
+      {
+        "brewery": {
+          "name": "And Union"
+        },
+        "name": "Summer Wheat Ale",
+        "untappd": {
+          "lookupSuccessful": false,
+          "match": "auto",
+          "searchTerm": "And Union Summer Wheat Ale",
+          "searchUrl": "https://untappd.com/search?q=And%20Union%20Summer%20Wheat%20Ale"
+        }
+      }
+    ]
+  }
+]

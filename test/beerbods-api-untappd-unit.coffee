@@ -208,3 +208,62 @@ describe 'beerbods api with untappd credentials', ->
 				output = result
 				expect(output).to.eql expected
 				done()
+
+describe 'beerbods api with untappd credentials and multiple beer week', ->
+	config = new scraper.config(["This week's test", "Next week's test"], "is", '/thebeers', 0)
+
+	beforeEach ->
+		@nockUntappd = nock("https://api.untappd.com")
+		global.nockBeerbodsSite = nock("https://beerbods.co.uk")
+			.get("/thebeers")
+			.replyWithFile(200, __dirname + '/replies/valid-multiple-beer-week.html')
+
+	afterEach ->
+		@nockUntappd.done()
+
+	context 'mock services return valid responses, multiple beer week', ->
+		expected = require './expected/current-output-plus-untappd-multiple-beer-week.json'
+		beforeEach ->
+			@nockUntappd.get("/v4/search/beer?q=#{encodeURIComponent 'Hillstown Brewery Saturn + Saucer'}&limit=5&client_id=not-real-id&client_secret=not-real-secret&access_token=")
+				.replyWithFile(200, __dirname + '/replies/untappd/valid-search.json')
+			@nockUntappd.get("/v4/search/beer?q=#{encodeURIComponent 'Hillstown Brewery Pamoja'}&limit=5&client_id=not-real-id&client_secret=not-real-secret&access_token=")
+				.replyWithFile(200, __dirname + '/replies/untappd/valid-search.json')
+			@nockUntappd.get("/v4/beer/info/481516?compact=true&client_id=not-real-id&client_secret=not-real-secret&access_token=")
+				.replyWithFile(200, __dirname + '/replies/untappd/valid-info.json')
+			@nockUntappd.get("/v4/beer/info/481516?compact=true&client_id=not-real-id&client_secret=not-real-secret&access_token=")
+				.replyWithFile(200, __dirname + '/replies/untappd/valid-info.json')
+
+		it 'produces json with info on the beer and populated untappd data using the manual mapping', (done) ->
+			output = null
+			scraper.scrapeBeerbods config, (result) ->
+				output = result
+				expect(output).is.not.null
+				expect(output).to.eql expected
+				done()
+
+describe 'beerbods api with untappd credentials and manual mapping', ->
+	config = new scraper.config(["This week's test", "Next week's test"], "shall be", '/thebeers', 0)
+
+	beforeEach ->
+		@nockUntappd = nock("https://api.untappd.com")
+		global.nockBeerbodsSite = nock("https://beerbods.co.uk")
+			.get("/thebeers")
+			.replyWithFile(200, __dirname + '/replies/valid-needing-name-override.html')
+
+	afterEach ->
+		@nockUntappd.done()
+
+	context 'mock services return valid responses, several matches on untappd, with manual mapping', ->
+		expected = require './expected/current-output-plus-untappd-manual-map.json'
+		expected = [expected[0]]
+		beforeEach ->
+			@nockUntappd.get("/v4/beer/info/447705?compact=true&client_id=not-real-id&client_secret=not-real-secret&access_token=")
+				.replyWithFile(200, __dirname + '/replies/untappd/valid-info.json')
+
+		it 'produces json with info on the beer and populated untappd data using the manual mapping', (done) ->
+			output = null
+			scraper.scrapeBeerbods config, (result) ->
+				output = result
+				expect(output).is.not.null
+				expect(output).to.eql expected
+				done()
