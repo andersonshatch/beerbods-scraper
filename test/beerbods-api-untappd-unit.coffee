@@ -12,7 +12,10 @@ afterEach ->
 	global.nockBeerbodsSite.done()
 
 describe 'beerbods api with untappd credentials', ->
-	config = new scraper.config(["This week's test", "Next week's test"], "shall be", '/thebeers', 0)
+	config = new scraper.config(["This week's test", "Next week's test"], "shall be", '/thebeers', 0, {
+		clientId: "not-real-id",
+		clientSecret: "not-real-secret"
+	})
 
 	beforeEach ->
 		@nockUntappd = nock("https://api.untappd.com")

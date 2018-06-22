@@ -24,7 +24,7 @@
   "homepage": "https://github.com/andersonshatch/beerbods-scraper#readme",
   "scripts": {
     "test": "npm run test-unit",
-    "test-unit": "mocha --compilers coffee:coffee-script/register test/beerbods-api-unit.coffee && mocha --compilers coffee:coffee-script/register test/beerbods-api-untappd-unit.coffee"
+    "test-unit": "mocha --compilers coffee:coffee-script/register test/*.coffee"
   },
   "devDependencies": {
     "chai": "^4.1.2",
