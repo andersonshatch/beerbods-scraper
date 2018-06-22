@@ -30,7 +30,7 @@ if fs.existsSync beerbodsNameOverrideMapPath
 RETRY_ATTEMPT_TIMES = 3
 
 class Config
-	constructor: (@weekDescriptors, @relativeDescriptor, @beerbodsPath = "", @maxIndex = 3) ->
+	constructor: (@weekDescriptors, @relativeDescriptor, @beerbodsPath = "", @maxIndex = 3, @untappdCredentials) ->
 
 module.exports.config = Config
 
@@ -102,6 +102,10 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 				summary: text
 			}
 
+		if config.untappdCredentials
+			untappdClientId = config.untappdCredentials.clientId
+			untappdClientSecret = config.untappdCredentials.clientSecret
+			untappdAccessToken = config.untappdCredentials.accessToken || ''
 		if untappdClientId and untappdClientSecret
 			untappd = {id: untappdClientId, secret: untappdClientSecret, accessToken: untappdAccessToken, apiRoot: untappdApiRoot}
 			populateUntappdData output, untappd, completionHandler
