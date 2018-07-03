@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  branch: netlify-cms-support
+  branch: master
 
 media_folder: images/uploads
 
