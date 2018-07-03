@@ -18,8 +18,8 @@ collections:
             fields:
               - {label: Beerbods Name, name: beerbodsName, widget: string, required: true}
               - {label: Untappd ID, name: untappdId, widget: number, valueType: int, required: true}
-  - label: Test
-    name: Test
+  - label: Name Override
+    name: name override
     files:
       - label: Name Overrides
         name: nameoverrides
