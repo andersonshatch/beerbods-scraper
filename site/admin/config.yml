@@ -8,7 +8,7 @@ collections:
   - label: Overrides
     name: overrides
     files:
-      - label: Beerbods overrides
+      - label: Untappd overrides
         name: overrides
         file: overrides.json
         fields:
@@ -18,6 +18,13 @@ collections:
             fields:
               - {label: Beerbods Name, name: beerbodsName, widget: string, required: true}
               - {label: Untappd ID, name: untappdId, widget: number, valueType: int, required: true}
+  - label: Test
+    name: Test
+    files:
+      - label: Name Overrides
+        name: nameoverrides
+        file: overrides.json
+        fields:
           - label: Beerbods Name Override
             name: beerbodsNameOverride
             widget: list
