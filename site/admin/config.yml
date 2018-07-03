@@ -12,13 +12,13 @@ collections:
         name: overrides
         file: overrides.json
         fields:
-          - label: Untappd Manual Lookups
+          - label: Untappd Manual Mapping
             name: beerbodsUntappdId
             widget: list
             fields:
               - {label: Beerbods Name, name: beerbodsName, widget: string, required: true}
               - {label: Untappd ID, name: untappdId, widget: number, valueType: int, required: true}
-          - label: Beerbods Name Overrides
+          - label: Beerbods Name Override
             name: beerbodsNameOverride
             widget: list
             fields:
