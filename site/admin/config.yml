@@ -5,12 +5,12 @@ backend:
 media_folder: images/uploads
 
 collections:
-  - label: Overrides
-    name: overrides
+  - label: Beerbods Untappd Mapping
+    name: beerbods untappd mapping
     files:
-      - label: Untappd overrides
+      - label: Untappd Mappings
         name: overrides
-        file: overrides.json
+        file: untappd-mapping.json
         fields:
           - label: Untappd Manual Mapping
             name: beerbodsUntappdId
@@ -23,7 +23,7 @@ collections:
     files:
       - label: Name Overrides
         name: nameoverrides
-        file: overrides.json
+        file: name-overrides.json
         fields:
           - label: Beerbods Name Override
             name: beerbodsNameOverride
