@@ -14,18 +14,29 @@ untappdApiRoot = "https://api.untappd.com/v4"
 
 beerbodsLoadTimeout = process.env.BEERBODS_LOAD_TIMEOUT || 3000
 
-beerbodsUntappdMapPath = __dirname + '/../beerbods-untappd-map.json'
-beerbodsNameOverrideMapPath = __dirname + '/../beerbods-name-override-map.json'
+manualOverridePath = __dirname + '/../overrides.json'
 
 beerbodsUntappdMap = {}
-if fs.existsSync beerbodsUntappdMapPath
-	file = fs.readFileSync beerbodsUntappdMapPath
-	beerbodsUntappdMap = JSON.parse file
-
 beerbodsNameOverrideMap = {}
-if fs.existsSync beerbodsNameOverrideMapPath
-	file = fs.readFileSync beerbodsNameOverrideMapPath
-	beerbodsNameOverrideMap = JSON.parse file
+manualOverrides = {}
+
+if fs.existsSync manualOverridePath
+	file = fs.readFileSync manualOverridePath
+	manualOverrides = try JSON.parse file
+
+	if manualOverrides?.beerbodsUntappdId
+		manualOverrides.beerbodsUntappdId.forEach (override) ->
+			if override.beerbodsName and override.untappdId
+				beerbodsUntappdMap[override.beerbodsName.toLowerCase()] = override.untappdId
+				return
+
+	if manualOverrides?.beerbodsNameOverride
+		manualOverrides.beerbodsNameOverride.forEach (override) ->
+			if override.beerbodsName and Array.isArray override.names
+				names = override.names.map (elem) ->
+					return elem.overrideName
+				beerbodsNameOverrideMap[override.beerbodsName] = names
+				return
 
 RETRY_ATTEMPT_TIMES = 3
 
