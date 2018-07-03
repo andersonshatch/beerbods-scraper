@@ -2,25 +2,29 @@ backend:
   name: git-gateway
   branch: netlify-cms-support
 
-media_folder: "images/uploads"
+media_folder: images/uploads
 
 collections:
-  - label: "Overrides"
-    name: "overrides"
+  - label: Overrides
+    name: overrides
     files:
-      - label: "Beerbods overrides"
-        name: "overrides"
-        file: "overrides.json"
+      - label: Beerbods overrides
+        name: overrides
+        file: overrides.json
         fields:
           - label: Untappd Manual Lookups
             name: beerbodsUntappdId
             widget: list
             fields:
-              - {label: Beerbods Name, name: beerbodsName, widget: string}
-              - {label: Untappd ID, name: untappdId, widget: number, valueType: int}
+              - {label: Beerbods Name, name: beerbodsName, widget: string, required: true}
+              - {label: Untappd ID, name: untappdId, widget: number, valueType: int, required: true}
           - label: Beerbods Name Overrides
-            name: beerbodsUntappdId
+            name: beerbodsNameOverride
             widget: list
             fields:
               - {label: Beerbods Page Name, name: beerbodsName, widget: string}
-              - {label: Name to use instead, name: overrideName, widget: string}
+              - label: Override Names
+                name: names
+                widget: list
+                fields:
+                  - {label: Name to use instead, name: overrideName, widget: string}
