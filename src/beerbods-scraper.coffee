@@ -14,14 +14,14 @@ untappdApiRoot = "https://api.untappd.com/v4"
 
 beerbodsLoadTimeout = process.env.BEERBODS_LOAD_TIMEOUT || 3000
 
-manualOverridePath = __dirname + '/../overrides.json'
+nameOverridePath = __dirname + '/../name-overrides.json'
+untappdMappingPath = __dirname + '/../untappd-mapping.json'
 
 beerbodsUntappdMap = {}
 beerbodsNameOverrideMap = {}
-manualOverrides = {}
 
-if fs.existsSync manualOverridePath
-	file = fs.readFileSync manualOverridePath
+if fs.existsSync untappdMappingPath
+	file = fs.readFileSync untappdMappingPath
 	manualOverrides = try JSON.parse file
 
 	if manualOverrides?.beerbodsUntappdId
@@ -29,6 +29,10 @@ if fs.existsSync manualOverridePath
 			if override.beerbodsName and override.untappdId
 				beerbodsUntappdMap[override.beerbodsName.toLowerCase()] = override.untappdId
 				return
+
+if fs.existsSync nameOverridePath
+	file = fs.readFileSync nameOverridePath
+	manualOverrides = try JSON.parse file
 
 	if manualOverrides?.beerbodsNameOverride
 		manualOverrides.beerbodsNameOverride.forEach (override) ->
