@@ -71,9 +71,10 @@ writer = () ->
 					for beer, beerIndex in week.beers
 						previousBeer = previous.beers[beerIndex]
 						if !beer.untappd.detailUrl and previousBeer.untappd.detailUrl
-							console.error "substituting older untappd data for #{key}[#{weekIndex}][#{beerIndex}] - #{previousBeer.name}"
+							console.error "substituting older untappd data for #{key}[#{weekIndex}][#{beerIndex}] - #{week.beerbodsCaption}"
 							beer.untappd = previousBeer.untappd
 							beer.untappd.lookupStale = true
+							beer.untappd.match = "cached - #{previousBeer.untappd.match}"
 							beer.brewery = previousBeer.brewery
 
 	outdir = "#{__dirname}/../site/v1"
