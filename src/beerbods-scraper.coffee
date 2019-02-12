@@ -91,8 +91,8 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 				if beer.indexOf(',') != -1
 					components = beer.split(',')
 					if components.length == 2
-						brewery = components[0].trim()
-						beer = components[1].trim()
+						brewery = components[1].trim()
+						beer = components[0].trim()
 				searchTerm = "#{brewery} #{beer}"
 
 				beers.push {

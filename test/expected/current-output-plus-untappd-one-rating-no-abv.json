@@ -8,17 +8,17 @@
     "beers": [
       {
         "brewery": {
-          "name": "Beer?",
+          "name": "The Dharma Initiative",
           "logo": "https://untappd.com/dharma.png",
           "url": "https://untappd.com/w/dharma-initiative/4815162342"
         },
-        "name": "The Dharma Initiative",
+        "name": "Beer?",
         "untappd": {
           "lookupSuccessful": true,
           "lookupStale": false,
           "match": "auto",
-          "searchTerm": "Beer? The Dharma Initiative",
-          "searchUrl": "https://untappd.com/search?q=Beer%3F%20The%20Dharma%20Initiative",
+          "searchTerm": "The Dharma Initiative Beer?",
+          "searchUrl": "https://untappd.com/search?q=The%20Dharma%20Initiative%20Beer%3F",
           "bid": 481516,
           "detailUrl": "https://untappd.com/b/dharma-initiative-beer/481516",
           "mobileDeepUrl": "https://untappd.com/qr/beer/481516",
