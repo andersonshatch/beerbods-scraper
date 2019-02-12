@@ -19,7 +19,7 @@ describe 'beerbods api with untappd credentials', ->
 
 	beforeEach ->
 		@nockUntappd = nock("https://api.untappd.com")
-		@searchUrl = "/v4/search/beer?q=#{encodeURIComponent 'Beer? The Dharma Initiative'}&limit=5&client_id=not-real-id&client_secret=not-real-secret&access_token="
+		@searchUrl = "/v4/search/beer?q=#{encodeURIComponent 'The Dharma Initiative Beer?'}&limit=5&client_id=not-real-id&client_secret=not-real-secret&access_token="
 		@infoUrl = '/v4/beer/info/481516?compact=true&client_id=not-real-id&client_secret=not-real-secret&access_token='
 		global.nockBeerbodsSite = nock("https://beerbods.co.uk")
 			.get("/thebeers")

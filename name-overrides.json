@@ -4,7 +4,7 @@
       "beerbodsName": "& UNION",
       "names": [
         {
-          "overrideName": "And Union, Summer Wheat Ale"
+          "overrideName": "Summer Wheat Ale, And Union"
         }
       ]
     },
@@ -12,37 +12,37 @@
       "beerbodsName": "à BLOC",
       "names": [
         {
-          "overrideName": "À Bloc, Superprestige"
+          "overrideName": "Superprestige, À Bloc"
         }
       ]
     },
     {
-      "beerbodsName": "Hillstown Brewery, Tea or Coffee?",
+      "beerbodsName": "Tea or Coffee?, Hillstown Brewery",
       "names": [
         {
-          "overrideName": "Hillstown Brewery, Saturn + Saucer"
+          "overrideName": "Saturn + Saucer, Hillstown Brewery"
         },
         {
-          "overrideName": "Pamoja"
+          "overrideName": "Pamoja, Hillstown Brewery"
         }
       ]
     },
     {
-      "beerbodsName": "Unity Brewing Co, Congregrate Belgian Pale",
+      "beerbodsName": "Congregrate Belgian Pale, Unity Brewing Co",
       "names": [
         {
-          "overrideName": "Unity Brewing Co, Congregate"
+          "overrideName": "Congregate, Unity Brewing Co"
         }
       ]
     },
     {
-      "beerbodsName": "Maule Brewing, Smashing Pale or Lucky IPA",
+      "beerbodsName": "Smashing Pale or Lucky IPA, Maule Brewing",
       "names": [
         {
-          "overrideName": "Maule Brewing Smashing Pale"
+          "overrideName": "Smashing Pale Maule Brewing"
         },
         {
-          "overrideName": "Maule Brewing Lucky IPA"
+          "overrideName": "Lucky IPA Maule Brewing"
         }
       ]
     }
