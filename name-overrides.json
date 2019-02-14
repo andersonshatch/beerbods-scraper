@@ -45,6 +45,14 @@
           "overrideName": "Lucky IPA Maule Brewing"
         }
       ]
+    },
+    {
+      "beerbodsName": "DRK by West Beer",
+      "names": [
+        {
+          "overrideName": "DRK, West Brewery"
+        }
+      ]
     }
   ]
 }
