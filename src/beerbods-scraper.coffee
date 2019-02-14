@@ -88,11 +88,15 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 			text = "#{prefix} #{beerTitles.join(' and/or ')}"
 
 			for beer in beerTitles
-				if beer.indexOf(',') != -1
-					components = beer.split(',')
+				containsBy = beer.indexOf('by') != -1;
+				if containsBy or beer.indexOf(',') != -1
+					if containsBy
+						components = beer.split('by')
+					else
+						components = beer.split(',')
 					if components.length == 2
-						brewery = components[1].trim()
-						beer = components[0].trim()
+						brewery = components[1].replace(/by|,/, '').trim()
+						beer = components[0].replace(/by|,/, '').trim()
 				searchTerm = "#{brewery} #{beer}"
 
 				beers.push {
