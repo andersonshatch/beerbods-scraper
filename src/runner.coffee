@@ -72,7 +72,7 @@ writer = () ->
 				if resultsAreEqual(previous, week)
 					for beer, beerIndex in week.beers
 						previousBeer = previous.beers[beerIndex]
-						if !beer.untappd.detailUrl and previousBeer.untappd.detailUrl
+						if !beer.untappd.detailUrl and previousBeer.untappd?.detailUrl
 							console.error "substituting older untappd data for #{key}[#{weekIndex}][#{beerIndex}] - #{week.beerbodsCaption}"
 							beer.untappd = previousBeer.untappd
 							beer.untappd.lookupStale = true
