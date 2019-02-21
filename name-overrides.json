@@ -47,10 +47,13 @@
       ]
     },
     {
-      "beerbodsName": "DRK by West Beer",
+      "beerbodsName": "DRK/G40 by West Beer",
       "names": [
         {
-          "overrideName": "DRK, West Brewery"
+          "overrideName": "DRK by West Brewery"
+        },
+        {
+          "overrideName": "G40 by West Brewery"
         }
       ]
     }
