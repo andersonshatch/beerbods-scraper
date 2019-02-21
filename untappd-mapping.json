@@ -135,6 +135,10 @@
     {
       "beerbodsName": "west brewery drk",
       "untappdId": 24104
+    },
+    {
+      "beerbodsName": "west brewery g40",
+      "untappdId": 2879269
     }
   ]
 }
