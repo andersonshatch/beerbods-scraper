@@ -56,6 +56,14 @@
           "overrideName": "G40 by West Brewery"
         }
       ]
+    },
+    {
+      "beerbodsName": "Skewbald by Wild Horse Brewing Company",
+      "names": [
+        {
+          "overrideName": "Skewbald by Wild Horse Brewing Co"
+        }
+      ]
     }
   ]
 }
