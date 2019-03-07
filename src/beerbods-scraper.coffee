@@ -49,20 +49,44 @@ class Config
 
 module.exports.config = Config
 
+class Week
+	constructor: (@title, @href, @imgSrc) ->
+
+scrapeArchive = (body, limit) ->
+	$ = cheerio.load body
+	output = []
+	container = $('div.beerofweek-container').get()
+	for div, index in container
+		if index > limit
+			break
+		title = $('h3', div).text()
+		href = $('a', div).attr('href')
+		imgSrc = beerbodsUrl + $('img', div).attr('src')
+		output.push(new Week(title, href, imgSrc))
+
+	return output
+
+scrapeUpcoming = (body, limit) ->
+	$ = cheerio.load body
+	output = []
+
+	return output
+
+
 module.exports.scrapeBeerbods = (config, completionHandler) ->
 	request beerbodsUrl + config.beerbodsPath, {timeout: beerbodsLoadTimeout}, (error, response, body) ->
 		if error or response.statusCode != 200
 			console.error "beerbods", error || response.statusCode
 			completionHandler []
 			return
-		$ = cheerio.load body
-		div = $('div.beerofweek-container').get()
+
+		if config.beerbodsPath.indexOf "archive" != -1
+			weeks = scrapeArchive body, config.maxIndex
+
 		output = []
-		for d, index in div
-			if index > config.maxIndex
-				break
-			title = $('h3', d).text()
-			href = $('a', d).attr('href')
+		for week, index in weeks
+			title = week.title
+			href = week.href
 
 			if !title or !href
 				console.error "beerbods beer not found - page layout unexpected (index: #{index})"
@@ -116,7 +140,7 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 				pretext: "#{prefix}:",
 				beerbodsCaption: title,
 				beerbodsUrl: beerUrl,
-				beerbodsImageUrl: beerbodsUrl + $('img', d).attr("src"),
+				beerbodsImageUrl: week.imgSrc,
 				beers: beers,
 				summary: text
 			}
