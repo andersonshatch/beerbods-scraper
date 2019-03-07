@@ -81,7 +81,17 @@ scrapeUpcoming = (body, limit) ->
 	for div, index in upcoming
 		if index > limit - 1
 			break
-		title = $('h4', div).text().replace(/\s\s+/g, ' ').trim()
+
+		title = $('h4', div).text()
+			.split('\n')
+			.map((string) -> string.replace(/\s\s+/g, ' ').trim())
+			.filter((string) -> string.length != 0)
+
+		if title.length == 2
+			title = "#{title[1]} by #{title[0]}"
+		else
+			title = title.join(' ')
+
 		link = $('a', div).attr('href')
 		img = beerbodsUrl + $('img', div).attr('src')
 		output.push(new Week(title, link, img))

@@ -15,6 +15,7 @@ describe 'beerbods api without untappd credentials', ->
 
 	context 'mock beerbods returns page with beer-club layout', ->
 		configClub = new scraper.config(["This week's test", "Next week's test", "3 week's test", "4 week's test"], "shall be", '/beer-club', 3)
+		clubAttachment = require './expected/current-output-sans-untappd-beer-club'
 		beforeEach ->
 			global.nockBeerbodsSite = nock("https://beerbods.co.uk")
 				.get("/beer-club")
@@ -31,7 +32,7 @@ describe 'beerbods api without untappd credentials', ->
 					expect(week.beers[0].untappd.lookupSuccessful).to.be.false
 					expect(week.beers[0].untappd.match).to.eql 'auto'
 
-				expect(output).to.eql(attachment)
+				expect(output).to.eql(clubAttachment)
 				do done
 
 	context 'mock beerbods returns page with expected layout', ->
