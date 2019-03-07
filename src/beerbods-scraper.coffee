@@ -70,6 +70,22 @@ scrapeUpcoming = (body, limit) ->
 	$ = cheerio.load body
 	output = []
 
+	thisWeekContainer = $('section.thisweeksbeer').get()[0]
+	thisWeekTitle = $('h2', thisWeekContainer).text()
+	thisWeekLink = $('a', thisWeekContainer).attr('href')
+	thisWeekImgSrc = beerbodsUrl + $('img', thisWeekContainer).attr('src')
+
+	output.push(new Week(thisWeekTitle, thisWeekLink, thisWeekImgSrc))
+
+	upcoming = $('section.shop-extras div.shop-item').get()
+	for div, index in upcoming
+		if index > limit - 1
+			break
+		title = $('h4', div).text().replace(/\s\s+/g, ' ').trim()
+		link = $('a', div).attr('href')
+		img = beerbodsUrl + $('img', div).attr('src')
+		output.push(new Week(title, link, img))
+
 	return output
 
 
@@ -80,8 +96,10 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 			completionHandler []
 			return
 
-		if config.beerbodsPath.indexOf "archive" != -1
+		if config.beerbodsPath.indexOf("archive") != -1
 			weeks = scrapeArchive body, config.maxIndex
+		else
+			weeks = scrapeUpcoming body, config.maxIndex
 
 		output = []
 		for week, index in weeks
