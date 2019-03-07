@@ -96,7 +96,7 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 			completionHandler []
 			return
 
-		if config.beerbodsPath.indexOf("archive") != -1
+		if config.beerbodsPath.indexOf("beer-club") == -1
 			weeks = scrapeArchive body, config.maxIndex
 		else
 			weeks = scrapeUpcoming body, config.maxIndex
