@@ -143,7 +143,7 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 				containsBy = beer.indexOf('by') != -1;
 				if containsBy or beer.indexOf(',') != -1
 					if containsBy
-						components = beer.split('by')
+						components = beer.split(/\s+by\s+/)
 					else
 						components = beer.split(',')
 					if components.length == 2
