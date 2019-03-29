@@ -67,21 +67,16 @@ scrapeArchive = (body, limit) ->
 	return output
 
 cleanTitle = (title) ->
-	parts = title.split('\n')
+	return title.split('\n')
 		.map((string) -> string.replace(/\s\s+/g, ' ').trim())
 		.filter((string) -> string.length != 0)
-
-	if parts.length == 2
-		return "#{parts[1]} by #{parts[0]}"
-	else
-		return parts.join(' ')
 
 scrapeUpcoming = (body, limit) ->
 	$ = cheerio.load body
 	output = []
 
 	thisWeekContainer = $('section.thisweeksbeer').get()[0]
-	thisWeekTitle = cleanTitle $('h2', thisWeekContainer).text()
+	thisWeekTitle = cleanTitle($('h2', thisWeekContainer).text()).join(' ')
 	thisWeekLink = $('a', thisWeekContainer).attr('href')
 	thisWeekImgSrc = beerbodsUrl + $('img', thisWeekContainer).attr('src')
 
@@ -93,6 +88,10 @@ scrapeUpcoming = (body, limit) ->
 			break
 
 		title = cleanTitle $('h4', div).text()
+		if title.length == 2
+			title = "#{title[1]} by #{title[0]}"
+		else
+			title = title.join(' ')
 
 		link = $('a', div).attr('href')
 		img = beerbodsUrl + $('img', div).attr('src')
