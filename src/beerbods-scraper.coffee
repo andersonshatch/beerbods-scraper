@@ -71,7 +71,7 @@ cleanTitle = (title) ->
 		.map((string) -> string.replace(/\s\s+/g, ' ').trim())
 		.filter((string) -> string.length != 0)
 
-	if title.length == 2
+	if parts.length == 2
 		return "#{parts[1]} by #{parts[0]}"
 	else
 		return parts.join(' ')
