@@ -66,12 +66,17 @@ scrapeArchive = (body, limit) ->
 
 	return output
 
+cleanTitle = (title) ->
+	return title.split('\n')
+		.map((string) -> string.replace(/\s\s+/g, ' ').trim())
+		.filter((string) -> string.length != 0)
+
 scrapeUpcoming = (body, limit) ->
 	$ = cheerio.load body
 	output = []
 
 	thisWeekContainer = $('section.thisweeksbeer').get()[0]
-	thisWeekTitle = $('h2', thisWeekContainer).text()
+	thisWeekTitle = cleanTitle($('h2', thisWeekContainer).text()).join(' ')
 	thisWeekLink = $('a', thisWeekContainer).attr('href')
 	thisWeekImgSrc = beerbodsUrl + $('img', thisWeekContainer).attr('src')
 
@@ -82,11 +87,7 @@ scrapeUpcoming = (body, limit) ->
 		if index > limit - 1
 			break
 
-		title = $('h4', div).text()
-			.split('\n')
-			.map((string) -> string.replace(/\s\s+/g, ' ').trim())
-			.filter((string) -> string.length != 0)
-
+		title = cleanTitle $('h4', div).text()
 		if title.length == 2
 			title = "#{title[1]} by #{title[0]}"
 		else
