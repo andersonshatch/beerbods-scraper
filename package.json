@@ -17,7 +17,7 @@
   "dependencies": {
     "cheerio": "0.22.0",
     "humanize": "0.0.9",
-    "pluralize": "^7.0.0",
+    "pluralize": "^8.0.0",
     "request": "2.x",
     "rimraf": "^2.6.3"
   },
