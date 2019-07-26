@@ -75,7 +75,7 @@ scrapeUpcoming = (body, limit) ->
 	$ = cheerio.load body
 	output = []
 
-	thisWeekContainer = $('section.thisweeksbeer').get()[0]
+	thisWeekContainer = $('section#thisweeksbeer').get()[0] or $('section.thisweeksbeer').get()[0]
 	thisWeekTitle = cleanTitle($('h2', thisWeekContainer).text()).join(' ')
 	thisWeekLink = $('a', thisWeekContainer).attr('href')
 	thisWeekImgSrc = beerbodsUrl + $('img', thisWeekContainer).attr('src')

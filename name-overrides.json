@@ -64,6 +64,17 @@
           "overrideName": "Skewbald by Wild Horse Brewing Co"
         }
       ]
+    },
+    {
+      "beerbodsName": "Salt Beer Factory",
+      "names": [
+        {
+          "overrideName": "Alpaca DDH IPA, by Salt Beer Factory"
+        },
+        {
+          "overrideName": "Citra NEIPA, by Salt Beer Factory"
+        }
+      ]
     }
   ]
 }
