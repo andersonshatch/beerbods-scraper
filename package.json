@@ -19,7 +19,7 @@
     "humanize": "0.0.9",
     "pluralize": "^8.0.0",
     "request": "2.x",
-    "rimraf": "^2.6.3"
+    "rimraf": "^2.7.0"
   },
   "homepage": "https://github.com/andersonshatch/beerbods-scraper#readme",
   "scripts": {
