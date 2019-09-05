@@ -55,11 +55,15 @@ class Week
 scrapeArchive = (body, limit) ->
 	$ = cheerio.load body
 	output = []
-	container = $('div.beerofweek-container').get()
+	container = $('div.shop-item--beer').get()
 	for div, index in container
 		if index > limit
 			break
-		title = $('h3', div).text()
+		title = cleanTitle($('p', div).text())
+		if title.length == 2
+			title = "#{title[1]} by #{title[0]}"
+		else
+			title = title.join(' ')
 		href = $('a', div).attr('href')
 		imgSrc = beerbodsUrl + $('img', div).attr('src')
 		output.push(new Week(title, href, imgSrc))
@@ -76,26 +80,11 @@ scrapeUpcoming = (body, limit) ->
 	output = []
 
 	thisWeekContainer = $('section#thisweeksbeer').get()[0] or $('section.thisweeksbeer').get()[0]
-	thisWeekTitle = cleanTitle($('h2', thisWeekContainer).text()).join(' ')
+	thisWeekTitle = cleanTitle($('h3', thisWeekContainer).text()).join(' ')
 	thisWeekLink = $('a', thisWeekContainer).attr('href')
 	thisWeekImgSrc = beerbodsUrl + $('img', thisWeekContainer).attr('src')
 
 	output.push(new Week(thisWeekTitle, thisWeekLink, thisWeekImgSrc))
-
-	upcoming = $('section.shop-extras div.shop-item').get()
-	for div, index in upcoming
-		if index > limit - 1
-			break
-
-		title = cleanTitle $('h4', div).text()
-		if title.length == 2
-			title = "#{title[1]} by #{title[0]}"
-		else
-			title = title.join(' ')
-
-		link = $('a', div).attr('href')
-		img = beerbodsUrl + $('img', div).attr('src')
-		output.push(new Week(title, link, img))
 
 	return output
 
@@ -107,7 +96,7 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 			completionHandler []
 			return
 
-		if config.beerbodsPath.indexOf("beer-club") == -1
+		if config.beerbodsPath.indexOf("archive") != -1
 			weeks = scrapeArchive body, config.maxIndex
 		else
 			weeks = scrapeUpcoming body, config.maxIndex

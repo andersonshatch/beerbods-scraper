@@ -6,7 +6,7 @@ scraper = require './beerbods-scraper'
 currentConfig = new scraper.config \
 	['This week\'s %s', 'Next week\'s %s', 'In 2 week\'s the %s', 'In 3 week\'s the %s'], \
 	'is', \
-	'/beer-club/',
+	'/',
 	3
 
 previousConfig = new scraper.config \
@@ -17,6 +17,16 @@ previousConfig = new scraper.config \
 
 previousData = null
 output = {}
+
+
+scrape = () ->
+	scraper.scrapeBeerbods currentConfig, (response) ->
+		output.current = response
+		writer()
+
+	scraper.scrapeBeerbods previousConfig, (response) ->
+		output.previous = response
+		writer()
 
 if process.argv.length == 3 and process.argv[2].startsWith("https://") and process.argv[2].endsWith(".json")
 	request process.argv[2], (error, response, body) ->
@@ -34,14 +44,7 @@ if process.argv.length == 3 and process.argv[2].startsWith("https://") and proce
 else
 	scrape()
 
-scrape = () ->
-	scraper.scrapeBeerbods currentConfig, (response) ->
-		output.current = response
-		writer()
 
-	scraper.scrapeBeerbods previousConfig, (response) ->
-		output.previous = response
-		writer()
 
 resultsAreEqual = (aBeer, bBeer) ->
 	if aBeer.beerbodsCaption != bBeer.beerbodsCaption
