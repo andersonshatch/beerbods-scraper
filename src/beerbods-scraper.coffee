@@ -80,6 +80,8 @@ scrapeUpcoming = (body, limit) ->
 	output = []
 
 	thisWeekContainer = $('section#thisweeksbeer').get()[0] or $('section.thisweeksbeer').get()[0]
+	if !thisWeekContainer
+		return output
 	thisWeekTitle = cleanTitle($('h3', thisWeekContainer).text()).join(' ')
 	thisWeekLink = $('a', thisWeekContainer).attr('href')
 	thisWeekImgSrc = beerbodsUrl + $('img', thisWeekContainer).attr('src')
@@ -163,6 +165,8 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 				summary: text
 			}
 
+		if output.length == 0
+			completionHandler output
 		if config.untappdCredentials
 			untappdClientId = config.untappdCredentials.clientId
 			untappdClientSecret = config.untappdCredentials.clientSecret

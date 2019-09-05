@@ -14,19 +14,19 @@ describe 'beerbods api without untappd credentials', ->
 	attachment = require './expected/current-output-sans-untappd.json'
 
 	context 'mock beerbods returns page with beer-club layout', ->
-		configClub = new scraper.config(["This week's test", "Next week's test", "3 week's test", "4 week's test"], "shall be", '/beer-club', 3)
+		configClub = new scraper.config(["This week's test", "Next week's test", "3 week's test", "4 week's test"], "shall be", '/', 3)
 		clubAttachment = require './expected/current-output-sans-untappd-beer-club'
 		beforeEach ->
 			global.nockBeerbodsSite = nock("https://beerbods.co.uk")
-				.get("/beer-club")
+				.get("/")
 				.replyWithFile(200, __dirname + '/replies/valid-beer-club.html')
 
-		it 'produces json with 4 weeks of beers', (done) ->
+		it 'produces json with 1 week of beers', (done) ->
 			output = null
 			scraper.scrapeBeerbods configClub, (result) ->
 				output = result
 				expect(output).to.not.be.null
-				expect(output).to.have.length 4
+				expect(output).to.have.length 1
 				output.forEach (week) ->
 					expect(week.beers).to.have.length 1
 					expect(week.beers[0].untappd.lookupSuccessful).to.be.false
@@ -41,12 +41,12 @@ describe 'beerbods api without untappd credentials', ->
 				.get("/thebeers")
 				.replyWithFile(200, __dirname + '/replies/valid.html')
 
-		it 'produces json with info on 4 weeks beers', (done) ->
+		it 'produces json with info on 1 weeks beers', (done) ->
 			output = null
 			scraper.scrapeBeerbods config, (result) ->
 				output = result
 				expect(output).to.not.be.null
-				expect(output).to.have.length 4
+				expect(output).to.have.length 1
 				output.forEach (week) ->
 					expect(week.beers).to.have.length 1
 					expect(week.beers[0].untappd.lookupSuccessful).to.be.false
