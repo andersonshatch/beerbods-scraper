@@ -88,6 +88,20 @@ scrapeUpcoming = (body, limit) ->
 
 	output.push(new Week(thisWeekTitle, thisWeekLink, thisWeekImgSrc))
 
+	for week, index in $('div.shop-item--beer').get()
+		if index >= limit
+			break
+
+		title = cleanTitle $('h4', week).text()
+		if title.length == 2
+			title = "#{title[1]} by #{title[0]}"
+		else
+			title = title.join(' ')
+		link = $('a', week).attr('href')
+		img = beerbodsUrl + $('img', week).attr('src')
+
+		output.push(new Week(title, link, img))
+
 	return output
 
 
