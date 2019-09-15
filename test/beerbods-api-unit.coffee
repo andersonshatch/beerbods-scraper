@@ -21,12 +21,12 @@ describe 'beerbods api without untappd credentials', ->
 				.get("/")
 				.replyWithFile(200, __dirname + '/replies/valid-beer-club.html')
 
-		it 'produces json with 1 week of beers', (done) ->
+		it 'produces json with 4 weeks of beers', (done) ->
 			output = null
 			scraper.scrapeBeerbods configClub, (result) ->
 				output = result
 				expect(output).to.not.be.null
-				expect(output).to.have.length 1
+				expect(output).to.have.length 4
 				output.forEach (week) ->
 					expect(week.beers).to.have.length 1
 					expect(week.beers[0].untappd.lookupSuccessful).to.be.false
@@ -41,12 +41,12 @@ describe 'beerbods api without untappd credentials', ->
 				.get("/thebeers")
 				.replyWithFile(200, __dirname + '/replies/valid.html')
 
-		it 'produces json with info on 1 weeks beers', (done) ->
+		it 'produces json with info on 4 weeks beers', (done) ->
 			output = null
 			scraper.scrapeBeerbods config, (result) ->
 				output = result
 				expect(output).to.not.be.null
-				expect(output).to.have.length 1
+				expect(output).to.have.length 4
 				output.forEach (week) ->
 					expect(week.beers).to.have.length 1
 					expect(week.beers[0].untappd.lookupSuccessful).to.be.false
