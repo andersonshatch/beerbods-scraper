@@ -75,6 +75,14 @@
           "overrideName": "Citra NEIPA, by Salt Beer Factory"
         }
       ]
+    },
+    {
+      "beerbodsName": "Evolve by Mad Squirrel Brewing",
+      "names": [
+        {
+          "overrideName": "Evolve by Mad Squirrel Brewery"
+        }
+      ]
     }
   ]
 }
