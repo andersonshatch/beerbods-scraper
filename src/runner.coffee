@@ -4,15 +4,21 @@ rimraf = require "rimraf"
 scraper = require './beerbods-scraper'
 
 currentConfig = new scraper.config \
-	['This week\'s %s', 'Next week\'s %s', 'In 2 week\'s the %s', 'In 3 week\'s the %s'], \
+	['This week\'s %s'], \
 	'is', \
-	'/',
+	'/umbraco/api/beers/featured/', \
+	1
+
+nextConfig = new scraper.config \
+	['Next week\'s %s', 'In 2 week\'s the %s', 'In 3 week\'s the %s', 'In 4 week\'s the %s'], \
+	'is', \
+	'/umbraco/api/beers/upcoming/', \
 	3
 
 previousConfig = new scraper.config \
 	['Last week\'s %s', '2 week\'s ago the %s', '3 week\'s ago the %s', '4 week\'s ago the %s'],
 	'was', \
-	'/archive', \
+	'/umbraco/api/beers/previous/', \
 	3
 
 previousData = null
@@ -22,6 +28,10 @@ output = {}
 scrape = () ->
 	scraper.scrapeBeerbods currentConfig, (response) ->
 		output.current = response
+		writer()
+
+	scraper.scrapeBeerbods nextConfig, (response) ->
+		output.next = response
 		writer()
 
 	scraper.scrapeBeerbods previousConfig, (response) ->
@@ -57,11 +67,14 @@ resultsAreEqual = (aBeer, bBeer) ->
 	return true
 
 writer = () ->
-	keys = ["previous", "current"]
+	keys = ["previous", "current", "next"]
 	for key in keys
 		if !output[key]
 			return
 
+	output["current"] = [output["current"][0], ...output["next"]]
+	delete output["next"]
+	keys.pop()
 	if previousData
 		for key in keys
 			if !output[key] or output[key].length == 0
