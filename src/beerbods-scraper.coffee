@@ -1,4 +1,3 @@
-cheerio = require "cheerio"
 humanize = require "humanize"
 pluralize = require "pluralize"
 request = require "request"
@@ -52,58 +51,6 @@ module.exports.config = Config
 class Week
 	constructor: (@title, @href, @imgSrc) ->
 
-scrapeArchive = (body, limit) ->
-	$ = cheerio.load body
-	output = []
-	container = $('div.shop-item--beer').get()
-	for div, index in container
-		if index > limit
-			break
-		title = cleanTitle($('p', div).text())
-		if title.length == 2
-			title = "#{title[1]} by #{title[0]}"
-		else
-			title = title.join(' ')
-		href = $('a', div).attr('href')
-		imgSrc = beerbodsUrl + $('img', div).attr('src')
-		output.push(new Week(title, href, imgSrc))
-
-	return output
-
-cleanTitle = (title) ->
-	return title.split('\n')
-		.map((string) -> string.replace(/\s\s+/g, ' ').trim())
-		.filter((string) -> string.length != 0)
-
-scrapeUpcoming = (body, limit) ->
-	$ = cheerio.load body
-	output = []
-
-	thisWeekContainer = $('section#thisweeksbeer').get()[0] or $('section.thisweeksbeer').get()[0]
-	if !thisWeekContainer
-		return output
-	thisWeekTitle = cleanTitle($('h3', thisWeekContainer).text()).join(' ')
-	thisWeekLink = $('a', thisWeekContainer).attr('href')
-	thisWeekImgSrc = beerbodsUrl + $('img', thisWeekContainer).attr('src')
-
-	output.push(new Week(thisWeekTitle, thisWeekLink, thisWeekImgSrc))
-
-	for week, index in $('div.shop-item--beer').get()
-		if index >= limit
-			break
-
-		title = cleanTitle $('h4', week).text()
-		if title.length == 2
-			title = "#{title[1]} by #{title[0]}"
-		else
-			title = title.join(' ')
-		link = $('a', week).attr('href')
-		img = beerbodsUrl + $('img', week).attr('src')
-
-		output.push(new Week(title, link, img))
-
-	return output
-
 
 module.exports.scrapeBeerbods = (config, completionHandler) ->
 	request beerbodsUrl + config.beerbodsPath, {timeout: beerbodsLoadTimeout}, (error, response, body) ->
@@ -112,10 +59,6 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 			completionHandler []
 			return
 
-		if config.beerbodsPath.indexOf("archive") != -1
-			weeks = scrapeArchive body, config.maxIndex
-		else
-			weeks = scrapeUpcoming body, config.maxIndex
 
 		output = []
 		for week, index in weeks
