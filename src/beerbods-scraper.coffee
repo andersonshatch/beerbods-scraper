@@ -51,25 +51,26 @@ module.exports.config = Config
 class Week
 	constructor: (@title, @href, @imgSrc) ->
 
-
-module.exports.scrapeBeerbods = (config, completionHandler) ->
-	request beerbodsUrl + config.beerbodsPath, {timeout: beerbodsLoadTimeout}, (error, response, body) ->
-		if error or response.statusCode != 200
-			console.error "beerbods", error || response.statusCode
+module.exports.scrapeBeerbods = (config, completionHandler, retryCount = 0) ->
+	request {url: (beerbodsUrl + config.beerbodsPath), json: true, timeout: beerbodsLoadTimeout}, (error, response, data) ->
+		if retryCount == RETRY_ATTEMPT_TIMES
 			completionHandler []
 			return
 
+		if error or response.statusCode != 200
+			console.error "beerbods", error || response.statusCode
+			module.exports.scrapeBeerbods config, completionHandler, retryCount + 1
+			return
+
+		if !Array.isArray data['data']
+			data['data'] = [data['data']]
 
 		output = []
-		for week, index in weeks
-			title = week.title
-			href = week.href
-
-			if !title or !href
-				console.error "beerbods beer not found - page layout unexpected (index: #{index})"
-				continue
-
-			beerUrl = beerbodsUrl + href
+		for week, index in data['data']
+			if index > config.maxIndex
+				break
+			title = week.name.trim()
+			brewery = week.brewedBy.trim()
 
 			beerTitles = [title]
 
@@ -81,23 +82,12 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 				else
 					beerTitles[0] = override
 
-			brewery = ''
-
 			beers = []
 			formattedDescriptor = util.format(config.weekDescriptors[index], pluralize('beer', beerTitles.length))
 			prefix = "#{formattedDescriptor} #{pluralize(config.relativeDescriptor, beerTitles.length)}"
-			text = "#{prefix} #{beerTitles.join(' and/or ')}"
+			text = "#{prefix} #{beerTitles.join(' and/or ')} by #{brewery}"
 
 			for beer in beerTitles
-				containsBy = beer.indexOf('by') != -1;
-				if containsBy or beer.indexOf(',') != -1
-					if containsBy
-						components = beer.split(/\s+by\s+/)
-					else
-						components = beer.split(',')
-					if components.length == 2
-						brewery = components[1].replace(/\s+by\s+|,/, '').trim()
-						beer = components[0].replace(/\s+by\s+|,/, '').trim()
 				searchTerm = "#{brewery} #{beer}"
 
 				beers.push {
@@ -116,8 +106,8 @@ module.exports.scrapeBeerbods = (config, completionHandler) ->
 			output.push {
 				pretext: "#{prefix}:",
 				beerbodsCaption: title,
-				beerbodsUrl: beerUrl,
-				beerbodsImageUrl: week.imgSrc,
+				beerbodsUrl: week.url,
+				beerbodsImageUrl: week.imageUrl,
 				beers: beers,
 				summary: text
 			}
