@@ -215,6 +215,14 @@
     {
       "beerbodsName": "gipsy hill brewing company baller",
       "untappdId": 2940100
+    },
+    {
+      "beerbodsName": "gun brewery dunkel weisse",
+      "untappdId": 3182624
+    },
+    {
+      "beerbodsName": "the isle of skye brewing company red",
+      "untappdId": 68913
     }
   ]
 }
