@@ -223,6 +223,18 @@
     {
       "beerbodsName": "the isle of skye brewing company red",
       "untappdId": 68913
+    },
+    {
+      "beerbodsName": "magic rock brewing co common grounds",
+      "untappdId": 1327084
+    },
+    {
+      "beerbodsName": "big smoke brew co cold spark",
+      "untappdId": 2266636
+    },
+    {
+      "beerbodsName": "moor beer old freddy walker",
+      "untappdId": 20278
     }
   ]
 }
