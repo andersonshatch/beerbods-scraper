@@ -7,7 +7,7 @@ exports.handler = function(event, context, callback) {
 	request(url, {'auth': {'bearer': bearer}}, function(error, response, body) {
 		callback(null, {
 			statusCode: 200,
-			body: JSON.stringify({'error': error, 'response': response, 'body': body}),
+			body: JSON.stringify({'error': error, 'body': body}),
 		});
 	});
 
