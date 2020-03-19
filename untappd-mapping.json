@@ -239,6 +239,10 @@
     {
       "beerbodsName": "thornbridge brewery st petersburg",
       "untappdId": 11934
+    },
+    {
+      "beerbodsName": "rudgate brewery jorvik",
+      "untappdId": 2417732
     }
   ]
 }
