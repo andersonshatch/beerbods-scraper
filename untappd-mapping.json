@@ -237,12 +237,16 @@
       "untappdId": 20278
     },
     {
-      "beerbodsName": "thornbridge brewery st petersburg",
+      "beerbodsName": "thornbridge brewery saint petersburg",
       "untappdId": 11934
     },
     {
       "beerbodsName": "rudgate brewery jorvik",
       "untappdId": 2417732
+    },
+    {
+      "beerbodsName": "11 session ipa by brew by numbers",
+      "untappdId": 691217
     }
   ]
 }
