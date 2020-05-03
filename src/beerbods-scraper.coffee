@@ -11,8 +11,6 @@ untappdClientSecret = process.env.UNTAPPD_CLIENT_SECRET || ''
 untappdAccessToken = process.env.UNTAPPD_ACCESS_TOKEN || ''
 untappdApiRoot = "https://api.untappd.com/v4"
 
-beerbodsLoadTimeout = process.env.BEERBODS_LOAD_TIMEOUT || 3000
-
 nameOverridePath = __dirname + '/../name-overrides.json'
 untappdMappingPath = __dirname + '/../untappd-mapping.json'
 
@@ -44,90 +42,81 @@ if fs.existsSync nameOverridePath
 RETRY_ATTEMPT_TIMES = 3
 
 class Config
-	constructor: (@weekDescriptors, @relativeDescriptor, @beerbodsPath = "", @maxIndex = 3, @untappdCredentials) ->
+	constructor: (@weekDescriptors, @relativeDescriptor, @maxIndex = 3, @untappdCredentials) ->
 
 module.exports.config = Config
 
 class Week
 	constructor: (@title, @href, @imgSrc) ->
 
-module.exports.scrapeBeerbods = (config, completionHandler, retryCount = 0) ->
-	request {url: (beerbodsUrl + config.beerbodsPath), json: true, timeout: beerbodsLoadTimeout}, (error, response, data) ->
-		if retryCount == RETRY_ATTEMPT_TIMES
-			completionHandler []
-			return
+module.exports.scrapeBeerbods = (config, beerbodsData, completionHandler) ->
+	output = []
+	for week, index in beerbodsData
+		if index > config.maxIndex
+			break
+		beers = []
+		beerTitles = []
+		for beer in week
+			title = beer.name.trim()
+			brewery = beer.brewedBy.trim()
+			beerTitles.push("#{title} by #{brewery}")
 
-		if error or response.statusCode != 200
-			console.error "beerbods", error || response.statusCode
-			module.exports.scrapeBeerbods config, completionHandler, retryCount + 1
-			return
+			searchTerm = "#{brewery} #{title}"
+			images = [beer.imageUrl]
+			if beer.altImageUrl and beer.altImageUrl != beerbodsUrl
+				images.push beer.altImageUrl
 
-		if !Array.isArray data['data']
-			data['data'] = [data['data']]
+			#if beerbodsNameOverrideMap[title]
+			#	override = beerbodsNameOverrideMap[title]
+			#	console.error "Using name override #{title} -> #{override}"
+			#	if Array.isArray(override)
+			#		beerTitles = override
+			#	else
+			#		beerTitles[0] = override
 
-		output = []
-		for week, index in data['data']
-			if index > config.maxIndex
-				break
-			title = week.name.trim()
-			brewery = week.brewedBy.trim()
-
-			beerTitles = [title]
-
-			if beerbodsNameOverrideMap[title]
-				override = beerbodsNameOverrideMap[title]
-				console.error "Using name override #{title} -> #{override}"
-				if Array.isArray(override)
-					beerTitles = override
-				else
-					beerTitles[0] = override
-
-			beers = []
-			formattedDescriptor = util.format(config.weekDescriptors[index], pluralize('beer', beerTitles.length))
-			prefix = "#{formattedDescriptor} #{pluralize(config.relativeDescriptor, beerTitles.length)}"
-			text = "#{prefix} #{beerTitles.join(' and/or ')} by #{brewery}"
-
-			for beer in beerTitles
-				searchTerm = "#{brewery} #{beer}"
-
-				beers.push {
-					name: beer,
-					untappd: {
-						searchUrl: "https://untappd.com/search?q=" + encodeURIComponent(searchTerm),
-						searchTerm: searchTerm,
-						match: "auto",
-						lookupSuccessful: false
-					},
-					brewery: {
-						name: brewery
-					}
+			beers.push {
+				name: title,
+				beerbodsUrl: beer.url,
+				images: images,
+				untappd: {
+					searchUrl: "https://untappd.com/search?q=" + encodeURIComponent(searchTerm),
+					searchTerm: searchTerm,
+					match: "auto",
+					lookupSuccessful: false
+				},
+				brewery: {
+					name: brewery
 				}
-
-			output.push {
-				pretext: "#{prefix}:",
-				beerbodsCaption: title,
-				beerbodsUrl: week.url,
-				beerbodsImageUrl: week.imageUrl,
-				beers: beers,
-				summary: text
 			}
 
-		if output.length == 0
-			completionHandler output
-		if config.untappdCredentials
-			untappdClientId = config.untappdCredentials.clientId
-			untappdClientSecret = config.untappdCredentials.clientSecret
-			untappdAccessToken = config.untappdCredentials.accessToken || ''
-		if untappdClientId and untappdClientSecret
-			untappd = {id: untappdClientId, secret: untappdClientSecret, accessToken: untappdAccessToken, apiRoot: untappdApiRoot}
-			populateUntappdData output, untappd, completionHandler
-		else
-			completionHandler output
+		formattedDescriptor = util.format(config.weekDescriptors[index], pluralize('beer', beerTitles.length))
+		prefix = "#{formattedDescriptor} #{pluralize(config.relativeDescriptor, beerTitles.length)}"
+
+		output.push {
+			pretext: "#{prefix}:",
+			beerbodsCaption: "beerbods* fields here are DEPRECATED - Update to use data from individual beers",
+			beerbodsUrl: beers[0].beerbodsUrl,
+			beerbodsImageUrl: beers[0].images[0],
+			beers: beers,
+			summary: "#{prefix} #{beerTitles.join(' and/or ')}"
+		}
+
+	if output.length == 0
+		completionHandler null, output
+	if config.untappdCredentials
+		untappdClientId = config.untappdCredentials.clientId
+		untappdClientSecret = config.untappdCredentials.clientSecret
+		untappdAccessToken = config.untappdCredentials.accessToken || ''
+	if untappdClientId and untappdClientSecret
+		untappd = {id: untappdClientId, secret: untappdClientSecret, accessToken: untappdAccessToken, apiRoot: untappdApiRoot}
+		populateUntappdData output, untappd, completionHandler
+	else
+		completionHandler null, output
 
 populateUntappdData = (messages, untappd, completionHandler) ->
 	doneAtIteration = 0
 	messages.map (a) ->
-		doneAtIteration = doneAtIteration + a.beers.length
+		doneAtIteration += a.beers.length
 
 	totalIteration = 0
 	output = []
@@ -135,13 +124,13 @@ populateUntappdData = (messages, untappd, completionHandler) ->
 		output.push message
 		for beer, beerIteration in message.beers
 			beer.outputIndices = [weekIteration, beerIteration] #context for where to put this back when it returns in the callback
-			searchBeerOnUntappd beer.untappd.searchTerm, beer, untappd, (updatedMessage) ->
+			searchBeerOnUntappd beer.untappd.searchTerm, beer, untappd, (error, updatedMessage) ->
 				totalIteration = totalIteration + 1
 				outputIndices = updatedMessage.outputIndices
 				output[outputIndices[0]].beers[outputIndices[1]] = updatedMessage
 				delete output[outputIndices[0]].beers[outputIndices[1]].outputIndices #remove context now, not needed in final output
 				if totalIteration == doneAtIteration
-					completionHandler output
+					completionHandler null, output
 					return
 
 untappdAuthParams = (untappdConfig) ->
@@ -154,7 +143,7 @@ searchBeerOnUntappd = (beerTitle, message, untappd, completionHandler, retryCoun
 		return
 
 	if retryCount == RETRY_ATTEMPT_TIMES
-		completionHandler message
+		completionHandler null, message
 		return
 	request "#{untappd.apiRoot}/search/beer?q=#{encodeURIComponent beerTitle}&limit=5&#{untappdAuthParams(untappd)}", (error, response, body) ->
 		if error or response.statusCode != 200 or !body
@@ -182,7 +171,7 @@ searchBeerOnUntappd = (beerTitle, message, untappd, completionHandler, retryCoun
 
 		if beers.length != 1
 			#Unsure which to pick, so bail and leave the search link
-			completionHandler message
+			completionHandler null, message
 			return
 
 		untappdBeerId = data.response.beers.items[0].beer.bid
@@ -190,7 +179,7 @@ searchBeerOnUntappd = (beerTitle, message, untappd, completionHandler, retryCoun
 
 lookupBeerOnUntappd = (untappdBeerId, message, untappd, completionHandler, retryCount = 0) ->
 	if retryCount == RETRY_ATTEMPT_TIMES
-		completionHandler message
+		completionHandler null, message
 		return
 	request "#{untappd.apiRoot}/beer/info/#{untappdBeerId}?compact=true&#{untappdAuthParams(untappd)}", (error, response, body) ->
 		if error or response.statusCode != 200
@@ -227,5 +216,5 @@ lookupBeerOnUntappd = (untappdBeerId, message, untappd, completionHandler, retry
 		untappd.lookupSuccessful = true
 		untappd.lookupStale = false
 
-		completionHandler message
+		completionHandler null, message
 
