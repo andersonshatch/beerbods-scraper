@@ -1,119 +1,15 @@
 expect = require('chai').expect
-nock = require 'nock'
-
-scraper = require '../src/beerbods-scraper'
-
-beforeEach ->
-	do nock.disableNetConnect
-
-afterEach ->
-	global.nockBeerbodsSite.done()
+util = require('util')
+scraper = require('../src/beerbods-scraper')
 
 describe 'beerbods api without untappd credentials', ->
-	config = new scraper.config(["This week's test", "Next week's test", "3 week's test", "4 week's test"], "shall be", '/thebeers')
-	attachment = require './expected/current-output-sans-untappd.json'
+	config = new scraper.config(["This week's test", "Next week's test", "2 week's test", "3 week's test", "4 week's test"], "is", '/thebeers')
 
-	context 'mock beerbods returns page with beer-club layout', ->
+	context 'mock beerbods upcoming beers', ->
 		configClub = new scraper.config(["This week's test", "Next week's test", "3 week's test", "4 week's test"], "shall be", '/', 3)
-		clubAttachment = require './expected/current-output-sans-untappd-beer-club'
-		beforeEach ->
-			global.nockBeerbodsSite = nock("https://beerbods.co.uk")
-				.get("/")
-				.replyWithFile(200, __dirname + '/replies/valid-beer-club.html')
 
-		it 'produces json with 4 weeks of beers', (done) ->
-			output = null
-			scraper.scrapeBeerbods configClub, (result) ->
-				output = result
-				expect(output).to.not.be.null
-				expect(output).to.have.length 4
-				output.forEach (week) ->
-					expect(week.beers).to.have.length 1
-					expect(week.beers[0].untappd.lookupSuccessful).to.be.false
-					expect(week.beers[0].untappd.match).to.eql 'auto'
+		beerbodsInput = require __dirname + '/replies/beerbods/upcoming.json'
+		expected = require __dirname + '/expected/upcoming.json'
 
-				expect(output).to.eql(clubAttachment)
-				do done
-
-	context 'mock beerbods returns page with expected layout', ->
-		beforeEach ->
-			global.nockBeerbodsSite = nock("https://beerbods.co.uk")
-				.get("/thebeers")
-				.replyWithFile(200, __dirname + '/replies/valid.html')
-
-		it 'produces json with info on 4 weeks beers', (done) ->
-			output = null
-			scraper.scrapeBeerbods config, (result) ->
-				output = result
-				expect(output).to.not.be.null
-				expect(output).to.have.length 4
-				output.forEach (week) ->
-					expect(week.beers).to.have.length 1
-					expect(week.beers[0].untappd.lookupSuccessful).to.be.false
-					expect(week.beers[0].untappd.match).to.eql 'auto'
-
-
-				expect(output).to.eql(attachment)
-				do done
-
-
-	context 'mock beerbods returns modified page layout', ->
-		beforeEach ->
-			global.nockBeerbodsSite = nock("https://beerbods.co.uk")
-				.get("/thebeers")
-				.replyWithFile(200, __dirname + '/replies/invalid.html')
-
-		it 'produces no beer info', ->
-			output = null
-			scraper.scrapeBeerbods config, (result) ->
-				output = result
-				expect(output).to.not.be.null
-				expect(output).to.have.length 0
-
-	context 'mock beerbods returns an error', ->
-		beforeEach ->
-			global.nockBeerbodsSite = nock("https://beerbods.co.uk")
-				.get("/thebeers")
-				.replyWithError("intentional mock request fail")
-
-		it 'produces no beer info', (done) ->
-			output = null
-			scraper.scrapeBeerbods config, (result) ->
-				output = result
-				expect(output).to.not.be.null
-				expect(output).to.have.length 0
-				do done
-
-	context 'mock beerbods returns a non 200 status', ->
-		beforeEach ->
-			global.nockBeerbodsSite = nock("https://beerbods.co.uk")
-				.get("/thebeers")
-				.reply(500, '', [])
-
-		it 'produces no beer info', (done) ->
-			output = null
-			scraper.scrapeBeerbods config, (result) ->
-				output = result
-				expect(output).to.not.be.null
-				expect(output).to.have.length 0
-				do done
-
-describe 'beerbods api without untappd credentials uses name override', ->
-	config = new scraper.config(["This week's test", "Next week's test"], "shall be", '/thebeers')
-	attachment = require './expected/current-output-sans-untappd-manual-map.json'
-
-	context 'mock beerbods returns page with expected layout', ->
-		beforeEach ->
-			global.nockBeerbodsSite = nock("https://beerbods.co.uk")
-				.get("/thebeers")
-				.replyWithFile(200, __dirname + '/replies/valid-needing-name-override.html')
-
-		it 'produces json with info on 2 weeks beers using the name override', (done) ->
-			output = null
-			scraper.scrapeBeerbods config, (result) ->
-				output = result
-				expect(output).to.not.be.null
-				expect(output).to.have.length 1
-
-				expect(output).to.eql(attachment)
-				do done
+		it 'produces scraped data', () ->
+			return expect(await util.promisify(scraper.scrapeBeerbods)(config, beerbodsInput)).to.eql expected

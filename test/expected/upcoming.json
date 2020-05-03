@@ -1,0 +1,146 @@
+[
+  {
+    "pretext": "This week's test beers are:",
+    "beerbodsCaption": "beerbods* fields here are DEPRECATED - Update to use data from individual beers",
+    "beerbodsUrl": "https://beerbods.co.uk/shop/good-chemistry-brewing/extra-special/",
+    "beerbodsImageUrl": "https://beerbods.co.uk/media/3984/2020_april_30_subscription_good_chemistry_extra_special.jpg",
+    "beers": [
+      {
+        "name": "Extra Special",
+        "beerbodsUrl": "https://beerbods.co.uk/shop/good-chemistry-brewing/extra-special/",
+        "images": [
+          "https://beerbods.co.uk/media/3984/2020_april_30_subscription_good_chemistry_extra_special.jpg",
+          "https://beerbods.co.uk/media/4012/goodchembeer_hawk.jpg"
+        ],
+        "untappd": {
+          "searchUrl": "https://untappd.com/search?q=Good%20Chemistry%20Brewing%20Extra%20Special",
+          "searchTerm": "Good Chemistry Brewing Extra Special",
+          "match": "auto",
+          "lookupSuccessful": false
+        },
+        "brewery": {
+          "name": "Good Chemistry Brewing"
+        }
+      },
+      {
+        "name": "C Bomb",
+        "beerbodsUrl": "https://beerbods.co.uk/shop/arbor-ales/c-bomb/",
+        "images": [
+          "https://beerbods.co.uk/media/4015/arbour_product.jpg",
+          "https://beerbods.co.uk/media/4018/arbour_beer_hawk.jpg"
+        ],
+        "untappd": {
+          "searchUrl": "https://untappd.com/search?q=Arbor%20Ales%20C%20Bomb",
+          "searchTerm": "Arbor Ales C Bomb",
+          "match": "auto",
+          "lookupSuccessful": false
+        },
+        "brewery": {
+          "name": "Arbor Ales"
+        }
+      }
+    ],
+    "summary": "This week's test beers are Extra Special by Good Chemistry Brewing and/or C Bomb by Arbor Ales"
+  },
+  {
+    "pretext": "Next week's test beer is:",
+    "beerbodsCaption": "beerbods* fields here are DEPRECATED - Update to use data from individual beers",
+    "beerbodsUrl": "https://beerbods.co.uk/shop/cross-borders-brewing-company/heavy/",
+    "beerbodsImageUrl": "https://beerbods.co.uk/media/3982/2020_april_2_subscription_cross_borders_heavy.jpg",
+    "beers": [
+      {
+        "name": "Heavy",
+        "beerbodsUrl": "https://beerbods.co.uk/shop/cross-borders-brewing-company/heavy/",
+        "images": [
+          "https://beerbods.co.uk/media/3982/2020_april_2_subscription_cross_borders_heavy.jpg"
+        ],
+        "untappd": {
+          "searchUrl": "https://untappd.com/search?q=Cross%20Borders%20Brewing%20Company%20Heavy",
+          "searchTerm": "Cross Borders Brewing Company Heavy",
+          "match": "auto",
+          "lookupSuccessful": false
+        },
+        "brewery": {
+          "name": "Cross Borders Brewing Company"
+        }
+      }
+    ],
+    "summary": "Next week's test beer is Heavy by Cross Borders Brewing Company"
+  },
+  {
+    "pretext": "2 week's test beer is:",
+    "beerbodsCaption": "beerbods* fields here are DEPRECATED - Update to use data from individual beers",
+    "beerbodsUrl": "https://beerbods.co.uk/shop/lost-pier-brewing/apa-actually/",
+    "beerbodsImageUrl": "https://beerbods.co.uk/media/4007/2020_may_14_subscription_lost_pier_apa_actually.jpg",
+    "beers": [
+      {
+        "name": "APA Actually",
+        "beerbodsUrl": "https://beerbods.co.uk/shop/lost-pier-brewing/apa-actually/",
+        "images": [
+          "https://beerbods.co.uk/media/4007/2020_may_14_subscription_lost_pier_apa_actually.jpg"
+        ],
+        "untappd": {
+          "searchUrl": "https://untappd.com/search?q=Lost%20Pier%20Brewing%20APA%20Actually",
+          "searchTerm": "Lost Pier Brewing APA Actually",
+          "match": "auto",
+          "lookupSuccessful": false
+        },
+        "brewery": {
+          "name": "Lost Pier Brewing"
+        }
+      }
+    ],
+    "summary": "2 week's test beer is APA Actually by Lost Pier Brewing"
+  },
+  {
+    "pretext": "3 week's test beer is:",
+    "beerbodsCaption": "beerbods* fields here are DEPRECATED - Update to use data from individual beers",
+    "beerbodsUrl": "https://beerbods.co.uk/shop/canopy-beer-co/spring-classic-elderflower-saison/",
+    "beerbodsImageUrl": "https://beerbods.co.uk/media/4011/2020_may_21_subscription_canopy.jpg",
+    "beers": [
+      {
+        "name": "Spring Classic Elderflower Saison",
+        "beerbodsUrl": "https://beerbods.co.uk/shop/canopy-beer-co/spring-classic-elderflower-saison/",
+        "images": [
+          "https://beerbods.co.uk/media/4011/2020_may_21_subscription_canopy.jpg"
+        ],
+        "untappd": {
+          "searchUrl": "https://untappd.com/search?q=Canopy%20Beer%20Co%20Spring%20Classic%20Elderflower%20Saison",
+          "searchTerm": "Canopy Beer Co Spring Classic Elderflower Saison",
+          "match": "auto",
+          "lookupSuccessful": false
+        },
+        "brewery": {
+          "name": "Canopy Beer Co"
+        }
+      }
+    ],
+    "summary": "3 week's test beer is Spring Classic Elderflower Saison by Canopy Beer Co"
+  },
+  {
+    "pretext": "4 week's test beer is:",
+    "beerbodsCaption": "beerbods* fields here are DEPRECATED - Update to use data from individual beers",
+    "beerbodsUrl": "https://beerbods.co.uk/shop/full-circle-brewing-co/repeater/",
+    "beerbodsImageUrl": "https://beerbods.co.uk/media/4021/full_circle_repeater-twb.jpg",
+    "beers": [
+      {
+        "name": "Repeater Session IPA",
+        "beerbodsUrl": "https://beerbods.co.uk/shop/full-circle-brewing-co/repeater/",
+        "images": [
+          "https://beerbods.co.uk/media/4021/full_circle_repeater-twb.jpg",
+          "https://beerbods.co.uk/media/4020/fcbeer_hawk.jpg"
+        ],
+        "untappd": {
+          "searchUrl": "https://untappd.com/search?q=Full%20Circle%20Brew%20Co%20Repeater%20Session%20IPA",
+          "searchTerm": "Full Circle Brew Co Repeater Session IPA",
+          "match": "auto",
+          "lookupSuccessful": false
+        },
+        "brewery": {
+          "name": "Full Circle Brew Co"
+        }
+      }
+    ],
+    "summary": "4 week's test beer is Repeater Session IPA by Full Circle Brew Co"
+  }
+]
