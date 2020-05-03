@@ -29,9 +29,11 @@ collections:
             name: beerbodsNameOverride
             widget: list
             fields:
-              - {label: Beerbods Page Name, name: beerbodsName, widget: string}
+              - {label: Beerbods Beer Name (API), name: beerbodsName, widget: string}
+              - {label: Beerbods Brewery Name (API), name: beerbodsBrewery, widget: string}
               - label: Override Names
-                name: names
-                widget: list
+                name: overrides
+                widget: object
                 fields:
-                  - {label: Name to use instead, name: overrideName, widget: string}
+                  - {label: Name to use instead, name: beer, widget: string}
+                  - {label: Brewery to use instead, name: brewery, widget: string}
