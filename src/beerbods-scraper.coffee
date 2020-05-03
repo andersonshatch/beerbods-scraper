@@ -16,6 +16,7 @@ untappdMappingPath = __dirname + '/../untappd-mapping.json'
 
 beerbodsUntappdMap = {}
 beerbodsNameOverrideMap = {}
+beerBrewerySplitter = "$$%$$"
 
 if fs.existsSync untappdMappingPath
 	file = fs.readFileSync untappdMappingPath
@@ -33,11 +34,8 @@ if fs.existsSync nameOverridePath
 
 	if manualOverrides?.beerbodsNameOverride
 		manualOverrides.beerbodsNameOverride.forEach (override) ->
-			if override.beerbodsName and Array.isArray override.names
-				names = override.names.map (elem) ->
-					return elem.overrideName
-				beerbodsNameOverrideMap[override.beerbodsName] = names
-				return
+			key = "#{(override.beerbodsName || '')}#{beerBrewerySplitter}#{(override.beerbodsBrewery || '')}".toLowerCase()
+			beerbodsNameOverrideMap[key] = override.overrides
 
 RETRY_ATTEMPT_TIMES = 3
 
@@ -59,20 +57,22 @@ module.exports.scrapeBeerbods = (config, beerbodsData, completionHandler) ->
 		for beer in week
 			title = beer.name.trim()
 			brewery = beer.brewedBy.trim()
+
+			nameOverrideKey = "#{title.toLowerCase()}#{beerBrewerySplitter}#{brewery.toLowerCase()}"
+			if beerbodsNameOverrideMap[nameOverrideKey]
+				overrides = beerbodsNameOverrideMap[nameOverrideKey]
+				console.error "Using name override #{title}/#{brewery} -> #{JSON.stringify overrides}"
+				if overrides.beer
+					title = overrides.beer.trim()
+				if overrides.brewery
+					brewery = overrides.brewery.trim()
+
 			beerTitles.push("#{title} by #{brewery}")
 
 			searchTerm = "#{brewery} #{title}"
 			images = [beer.imageUrl]
 			if beer.altImageUrl and beer.altImageUrl != beerbodsUrl
 				images.push beer.altImageUrl
-
-			#if beerbodsNameOverrideMap[title]
-			#	override = beerbodsNameOverrideMap[title]
-			#	console.error "Using name override #{title} -> #{override}"
-			#	if Array.isArray(override)
-			#		beerTitles = override
-			#	else
-			#		beerTitles[0] = override
 
 			beers.push {
 				name: title,

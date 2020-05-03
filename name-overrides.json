@@ -1,88 +1,12 @@
 {
   "beerbodsNameOverride": [
     {
-      "beerbodsName": "& UNION",
-      "names": [
-        {
-          "overrideName": "Summer Wheat Ale, And Union"
-        }
-      ]
-    },
-    {
-      "beerbodsName": "à BLOC",
-      "names": [
-        {
-          "overrideName": "Superprestige, À Bloc"
-        }
-      ]
-    },
-    {
-      "beerbodsName": "Tea or Coffee?, Hillstown Brewery",
-      "names": [
-        {
-          "overrideName": "Saturn + Saucer, Hillstown Brewery"
-        },
-        {
-          "overrideName": "Pamoja, Hillstown Brewery"
-        }
-      ]
-    },
-    {
-      "beerbodsName": "Congregrate Belgian Pale, Unity Brewing Co",
-      "names": [
-        {
-          "overrideName": "Congregate, Unity Brewing Co"
-        }
-      ]
-    },
-    {
-      "beerbodsName": "Smashing Pale or Lucky IPA, Maule Brewing",
-      "names": [
-        {
-          "overrideName": "Smashing Pale Maule Brewing"
-        },
-        {
-          "overrideName": "Lucky IPA Maule Brewing"
-        }
-      ]
-    },
-    {
-      "beerbodsName": "DRK/G40 by West Beer",
-      "names": [
-        {
-          "overrideName": "DRK by West Brewery"
-        },
-        {
-          "overrideName": "G40 by West Brewery"
-        }
-      ]
-    },
-    {
-      "beerbodsName": "Skewbald by Wild Horse Brewing Company",
-      "names": [
-        {
-          "overrideName": "Skewbald by Wild Horse Brewing Co"
-        }
-      ]
-    },
-    {
-      "beerbodsName": "Salt Beer Factory",
-      "names": [
-        {
-          "overrideName": "Alpaca DDH IPA, by Salt Beer Factory"
-        },
-        {
-          "overrideName": "Citra NEIPA, by Salt Beer Factory"
-        }
-      ]
-    },
-    {
-      "beerbodsName": "Evolve by Mad Squirrel Brewing",
-      "names": [
-        {
-          "overrideName": "Evolve by Mad Squirrel Brewery"
-        }
-      ]
+      "beerbodsName": "Repeater",
+      "beerbodsBrewery": "Full Circle Brewing Co",
+      "overrides": {
+          "beer": "Repeater Session IPA",
+          "brewery": "Full Circle Brew Co"
+      }
     }
   ]
 }
