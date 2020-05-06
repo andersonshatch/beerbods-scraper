@@ -29,7 +29,8 @@ fetchBeerbodsData = () ->
 		date = entry.featuredDate
 		if !map.has date
 			map.set date, []
-		map.get(date).push(entry)
+		if !map.get(date).map((e) => e.url).includes(entry.url)
+			map.get(date).push(entry)
 
 	prev = []
 	current = []
