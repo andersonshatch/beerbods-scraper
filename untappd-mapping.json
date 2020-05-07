@@ -251,6 +251,10 @@
     {
       "beerbodsName": "cross borders brewing company heavy",
       "untappdId": 1866083
+    },
+    {
+      "beerbodsName": "cross borders brewing company india pale ale",
+      "untappdId": 3128794
     }
   ]
 }
