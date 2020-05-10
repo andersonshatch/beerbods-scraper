@@ -1,6 +1,15 @@
-{
-  "message": "Previous beers",
-  "data": [
+[
+  [
+    {
+      "url": "https://beerbods.co.uk/shop/good-chemistry-brewing/extra-special/",
+      "name": "Extra Special",
+      "caption": "Extra Special Bitter ",
+      "brewedBy": "Good Chemistry Brewing",
+      "imageUrl": "https://beerbods.co.uk/media/3984/2020_april_30_subscription_good_chemistry_extra_special.jpg",
+      "altImageUrl": "https://beerbods.co.uk/media/4012/goodchembeer_hawk.jpg",
+      "featuredDate": "2020-04-30T00:00:00",
+      "rateBeerId": "700386"
+    },
     {
       "url": "https://beerbods.co.uk/shop/arbor-ales/c-bomb/",
       "name": "C Bomb",
@@ -10,7 +19,9 @@
       "altImageUrl": "https://beerbods.co.uk/media/4018/arbour_beer_hawk.jpg",
       "featuredDate": "2020-04-30T00:00:00",
       "rateBeerId": "248421"
-    },
+    }
+  ],
+  [
     {
       "url": "https://beerbods.co.uk/shop/cross-borders-brewing-company/heavy/",
       "name": "Heavy",
@@ -20,7 +31,9 @@
       "altImageUrl": "https://beerbods.co.uk",
       "featuredDate": "2020-05-07T00:00:00",
       "rateBeerId": ""
-    },
+    }
+  ],
+  [
     {
       "url": "https://beerbods.co.uk/shop/lost-pier-brewing/apa-actually/",
       "name": "APA Actually",
@@ -30,17 +43,9 @@
       "altImageUrl": "https://beerbods.co.uk",
       "featuredDate": "2020-05-14T00:00:00",
       "rateBeerId": "627539"
-    },
-    {
-      "url": "https://beerbods.co.uk/shop/full-circle-brewing-co/repeater/",
-      "name": "Repeater",
-      "caption": "Pale Ale ",
-      "brewedBy": "Full Circle Brewing Co",
-      "imageUrl": "https://beerbods.co.uk/media/4021/full_circle_repeater-twb.jpg",
-      "altImageUrl": "https://beerbods.co.uk/media/4020/fcbeer_hawk.jpg",
-      "featuredDate": "2020-05-28T00:00:00",
-      "rateBeerId": ""
-    },
+    }
+  ],
+  [
     {
       "url": "https://beerbods.co.uk/shop/canopy-beer-co/spring-classic-elderflower-saison/",
       "name": "Spring Classic Elderflower Saison",
@@ -51,5 +56,17 @@
       "featuredDate": "2020-05-21T00:00:00",
       "rateBeerId": ""
     }
+  ],
+  [
+    {
+      "url": "https://beerbods.co.uk/shop/full-circle-brewing-co/repeater/",
+      "name": "Repeater",
+      "caption": "Pale Ale ",
+      "brewedBy": "Full Circle Brewing Co",
+      "imageUrl": "https://beerbods.co.uk/media/4021/full_circle_repeater-twb.jpg",
+      "altImageUrl": "https://beerbods.co.uk/media/4020/fcbeer_hawk.jpg",
+      "featuredDate": "2020-05-28T00:00:00",
+      "rateBeerId": ""
+    }
   ]
-}
+]

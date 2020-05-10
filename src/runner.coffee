@@ -14,40 +14,8 @@ previousConfig = new scraper.config \
   'was', \
   3
 
-fetchBeerbodsData = () ->
-	beerbods = got.extend({prefixUrl: 'https://beerbods.co.uk/', responseType: 'json', resolveBodyOnly: true})
-	previous = beerbods('umbraco/api/beers/previous/') #array, in descending order
-	featured = beerbods('umbraco/api/beers/featured/') #single element
-	upcoming = beerbods('umbraco/api/beers/upcoming/') #array, in ascending order
-
-	featured = await featured
-	splitPoint = new Date(featured.data.featuredDate)
-
-	#bucket by featuredDate to group any multiple beer weeks together, since beerbods API does not group them
-	map = new Map()
-	for entry in [...(await previous).data.reverse(), featured.data, ...(await upcoming).data]
-		date = entry.featuredDate
-		if !map.has date
-			map.set date, []
-		if !map.get(date).map((e) => e.url).includes(entry.url)
-			map.get(date).push(entry)
-
-	prev = []
-	current = []
-
-	#anything before featuredDate of the featured beer has passed
-	for elem in Array.from(map.values())
-		if new Date(elem[0].featuredDate) < splitPoint
-			prev.push(elem)
-		else
-			current.push(elem)
-
-	data = {prev, current}
-
-	return data
-
 scrape = () ->
-	beerbodsData = await fetchBeerbodsData()
+	beerbodsData = await scraper.fetchBeerbodsData()
 	scrape = util.promisify(scraper.scrapeBeerbods)
 	previousBeers = scrape(previousConfig, beerbodsData.prev)
 	currentBeers = scrape(nextConfig, beerbodsData.current)

@@ -1,6 +1,7 @@
 humanize = require "humanize"
 pluralize = require "pluralize"
 request = require "request"
+got = require "got"
 fs = require "fs"
 util = require "util"
 
@@ -46,6 +47,48 @@ module.exports.config = Config
 
 class Week
 	constructor: (@title, @href, @imgSrc) ->
+
+fetchBeerbodsData = () ->
+	beerbods = got.extend({prefixUrl: 'https://beerbods.co.uk/', responseType: 'json', resolveBodyOnly: true})
+	previous = beerbods('umbraco/api/beers/previous/') #array
+	featured = beerbods('umbraco/api/beers/featured/') #single element
+	upcoming = beerbods('umbraco/api/beers/upcoming/') #array
+
+	featured = await featured
+	splitPoint = new Date(featured.data.featuredDate)
+
+	#bucket by featuredDate to group any multiple beer weeks together, since beerbods API does not group them
+	map = new Map()
+	array = [...(await previous).data, featured.data, ...(await upcoming).data]
+	for entry in array
+		date = entry.featuredDate
+		if !map.has date
+			map.set date, []
+		if !map.get(date).map((e) => e.url).includes(entry.url)
+			map.get(date).push(entry)
+
+	prev = []
+	current = []
+
+	#anything before featuredDate of the featured beer has passed
+	for elem in Array.from(map.values())
+		if new Date(elem[0].featuredDate) < splitPoint
+			prev.push(elem)
+		else
+			current.push(elem)
+
+	prev.sort(sortFeaturedDateInSubArray).reverse()
+	current.sort(sortFeaturedDateInSubArray)
+
+	data = {prev, current}
+
+	return data
+
+sortFeaturedDateInSubArray = (d1, d2) ->
+	thing = new Date(d1[0]['featuredDate']) - new Date(d2[0]['featuredDate'])
+	return thing
+
+module.exports.fetchBeerbodsData = fetchBeerbodsData
 
 module.exports.scrapeBeerbods = (config, beerbodsData, completionHandler) ->
 	output = []

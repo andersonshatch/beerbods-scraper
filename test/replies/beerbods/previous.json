@@ -1,0 +1,55 @@
+{
+  "message": "Previous beers",
+  "data": [
+    {
+      "url": "https://beerbods.co.uk/shop/brew-by-numbers/11-session-ipa-mosaic/",
+      "name": "11 | Session IPA - Mosaic",
+      "caption": "Session IPA ",
+      "brewedBy": "Brew by Numbers",
+      "imageUrl": "https://beerbods.co.uk/media/3983/2020_april_23_subscription_bbno_11_mosaic.jpg",
+      "altImageUrl": "https://beerbods.co.uk/media/4010/bbbeerhawk.jpg",
+      "featuredDate": "2020-04-23T00:00:00",
+      "rateBeerId": "267182"
+    },
+    {
+      "url": "https://beerbods.co.uk/shop/edinburgh-beer-factory/moonstrips/",
+      "name": "Moonstrips",
+      "caption": "Smoky Wheat Beer",
+      "brewedBy": "Edinburgh Beer Factory",
+      "imageUrl": "https://beerbods.co.uk/media/3975/2020_april_16_subscription_edinbrugh_beer_factory_moon_strips.jpg",
+      "altImageUrl": "https://beerbods.co.uk/media/4005/edinbrugh_beerhawk2.jpg",
+      "featuredDate": "2020-04-16T00:00:00",
+      "rateBeerId": "569779"
+    },
+    {
+      "url": "https://beerbods.co.uk/shop/rudgate-brewery/jorvik-blonde/",
+      "name": "Jorvik Blonde",
+      "caption": "Blonde Ale",
+      "brewedBy": "Rudgate Brewery",
+      "imageUrl": "https://beerbods.co.uk/media/3968/2020_april_9_subscription_jorvik_rudgate_brewery.jpg",
+      "altImageUrl": "https://beerbods.co.uk/media/3969/april_9_rudgate_brewery_jorvik.jpg",
+      "featuredDate": "2020-04-09T00:00:00",
+      "rateBeerId": ""
+    },
+    {
+      "url": "https://beerbods.co.uk/shop/big-smoke-brew-co/cold-spark/",
+      "name": "Cold Spark",
+      "caption": "Lactose Citra Pale Ale",
+      "brewedBy": "Big Smoke Brew Co",
+      "imageUrl": "https://beerbods.co.uk/media/3957/2020_mar_26_subscription_cold_spark.jpg",
+      "altImageUrl": "https://beerbods.co.uk/media/3976/march_26_cold_spark_big_smoke.jpg",
+      "featuredDate": "2020-03-26T00:00:00",
+      "rateBeerId": "545977"
+    },
+    {
+      "url": "https://beerbods.co.uk/shop/thornbridge-brewery/saint-petersburg/",
+      "name": "Saint Petersburg",
+      "caption": "Imperial Russian Stout",
+      "brewedBy": "Thornbridge Brewery",
+      "imageUrl": "https://beerbods.co.uk/media/3942/2020_april_2_subscription_thornbridge_saint_petersburg.jpg",
+      "altImageUrl": "https://beerbods.co.uk/media/3962/april_2_thornbridge_saint_petersburg.jpg",
+      "featuredDate": "2020-04-02T00:00:00",
+      "rateBeerId": "55938"
+    }
+  ]
+}

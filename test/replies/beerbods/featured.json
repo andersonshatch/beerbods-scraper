@@ -1,0 +1,12 @@
+{ "message":"Beer of the week",
+  "data": {
+    "url": "https://beerbods.co.uk/shop/good-chemistry-brewing/extra-special/",
+    "name": "Extra Special",
+    "caption": "Extra Special Bitter ",
+    "brewedBy": "Good Chemistry Brewing",
+    "imageUrl": "https://beerbods.co.uk/media/3984/2020_april_30_subscription_good_chemistry_extra_special.jpg",
+    "altImageUrl": "https://beerbods.co.uk/media/4012/goodchembeer_hawk.jpg",
+    "featuredDate": "2020-04-30T00:00:00",
+    "rateBeerId": "700386"
+  }
+}
