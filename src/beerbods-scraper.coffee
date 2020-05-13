@@ -49,10 +49,13 @@ class Week
 	constructor: (@title, @href, @imgSrc) ->
 
 fetchBeerbodsData = () ->
+	apiPrevCount = process.env.BEERBODS_REQUEST_PREV_COUNT || 8
+	apiUpcomingCount = process.env.BEERBODS_REQUEST_UPCOMING_COUNT || 8
+
 	beerbods = got.extend({prefixUrl: 'https://beerbods.co.uk/', responseType: 'json', resolveBodyOnly: true})
-	previous = beerbods('umbraco/api/beers/previous/') #array
+	previous = beerbods("umbraco/api/beers/previous/?count=#{apiPrevCount}") #array
 	featured = beerbods('umbraco/api/beers/featured/') #single element
-	upcoming = beerbods('umbraco/api/beers/upcoming/') #array
+	upcoming = beerbods("umbraco/api/beers/upcoming/?count=#{apiUpcomingCount}") #array
 
 	featured = await featured
 	splitPoint = new Date(featured.data.featuredDate)

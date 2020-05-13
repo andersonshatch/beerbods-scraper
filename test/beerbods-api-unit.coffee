@@ -7,9 +7,9 @@ describe 'bucket beerbods beers by date and return sorted', ->
 	beforeEach ->
 		do nock.disableNetConnect
 		beerbods = nock('https://beerbods.co.uk/umbraco/api/beers/')
-		beerbods.get('/previous/').replyWithFile(200, __dirname + '/replies/beerbods/previous.json')
+		beerbods.get('/previous/?count=8').replyWithFile(200, __dirname + '/replies/beerbods/previous.json')
 		beerbods.get('/featured/').replyWithFile(200, __dirname + '/replies/beerbods/featured.json')
-		beerbods.get('/upcoming/').replyWithFile(200, __dirname + '/replies/beerbods/upcoming.json')
+		beerbods.get('/upcoming/?count=8').replyWithFile(200, __dirname + '/replies/beerbods/upcoming.json')
 
 	context 'mis-sorted-input', ->
 		it 'sorts and buckets data', () ->
