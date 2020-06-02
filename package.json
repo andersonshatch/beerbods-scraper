@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "cheerio": "0.22.0",
-    "got": "^11.1.4",
+    "got": "^11.2.0",
     "humanize": "0.0.9",
     "pluralize": "^8.0.0",
     "request": "2.x",
