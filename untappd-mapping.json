@@ -267,6 +267,10 @@
     {
       "beerbodsName": "birra del borgo reale",
       "untappdId": 69064
+    },
+    {
+      "beerbodsName": "gloucester brewery gloucester gold",
+      "untappdId": 172604
     }
   ]
 }
