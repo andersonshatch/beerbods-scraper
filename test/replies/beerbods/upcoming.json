@@ -50,6 +50,17 @@
       "altImageUrl": "https://beerbods.co.uk",
       "featuredDate": "2020-05-21T00:00:00",
       "rateBeerId": ""
+    },
+    {
+      "url": "https://beerbods.co.uk/plus-beer/spring-classic-elderflower-saison/",
+      "name": "plus-beer",
+      "caption": "plus-beer",
+      "brewedBy": "a brewery",
+      "imageUrl": "https://beerbods.co.uk/media/4011/2020_may_21_subscription_canopy.jpg",
+      "altImageUrl": "https://beerbods.co.uk",
+      "featuredDate": "2020-05-21T00:00:00",
+      "rateBeerId": "",
+      "isPlusBeer": true
     }
   ]
 }
