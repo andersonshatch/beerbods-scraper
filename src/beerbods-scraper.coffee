@@ -48,6 +48,9 @@ module.exports.config = Config
 class Week
 	constructor: (@title, @href, @imgSrc) ->
 
+filterNonPlusBeers = (beer) ->
+	return !beer.isPlusBeer
+
 fetchBeerbodsData = () ->
 	apiPrevCount = process.env.BEERBODS_REQUEST_PREV_COUNT || 8
 	apiUpcomingCount = process.env.BEERBODS_REQUEST_UPCOMING_COUNT || 8
@@ -62,7 +65,7 @@ fetchBeerbodsData = () ->
 
 	#bucket by featuredDate to group any multiple beer weeks together, since beerbods API does not group them
 	map = new Map()
-	array = [...(await previous).data, featured.data, ...(await upcoming).data]
+	array = [...(await previous).data.filter(filterNonPlusBeers), featured.data, ...(await upcoming).data.filter(filterNonPlusBeers)]
 	for entry in array
 		date = entry.featuredDate
 		if !map.has date
