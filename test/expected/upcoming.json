@@ -12,6 +12,7 @@
           "https://beerbods.co.uk/media/3984/2020_april_30_subscription_good_chemistry_extra_special.jpg",
           "https://beerbods.co.uk/media/4012/goodchembeer_hawk.jpg"
         ],
+        "isPlusBeer": false,
         "untappd": {
           "searchUrl": "https://untappd.com/search?q=Good%20Chemistry%20Brewing%20Extra%20Special",
           "searchTerm": "Good Chemistry Brewing Extra Special",
@@ -29,6 +30,7 @@
           "https://beerbods.co.uk/media/4015/arbour_product.jpg",
           "https://beerbods.co.uk/media/4018/arbour_beer_hawk.jpg"
         ],
+        "isPlusBeer": false,
         "untappd": {
           "searchUrl": "https://untappd.com/search?q=Arbor%20Ales%20C%20Bomb",
           "searchTerm": "Arbor Ales C Bomb",
@@ -40,7 +42,9 @@
         }
       }
     ],
-    "summary": "This week's test beers are Extra Special by Good Chemistry Brewing and/or C Bomb by Arbor Ales"
+    "plusBeers": [],
+    "summary": "This week's test beers are Extra Special by Good Chemistry Brewing and/or C Bomb by Arbor Ales",
+    "plusSummary": "This week's test plus beers are unknown"
   },
   {
     "pretext": "Next week's test beer is:",
@@ -54,6 +58,7 @@
         "images": [
           "https://beerbods.co.uk/media/3982/2020_april_2_subscription_cross_borders_heavy.jpg"
         ],
+        "isPlusBeer": false,
         "untappd": {
           "searchUrl": "https://untappd.com/search?q=Cross%20Borders%20Brewing%20Company%20Heavy",
           "searchTerm": "Cross Borders Brewing Company Heavy",
@@ -65,7 +70,27 @@
         }
       }
     ],
-    "summary": "Next week's test beer is Heavy by Cross Borders Brewing Company"
+    "plusBeers": [
+      {
+        "name": "Beer",
+        "beerbodsUrl": "https://beerbods.co.uk/shop/dharma-initiative/beer/",
+        "images": [
+          "https://beerbods.co.uk/media/4815/1623_42.jpg"
+        ],
+        "isPlusBeer": true,
+        "untappd": {
+          "searchUrl": "https://untappd.com/search?q=The%20Dharma%20Initiative%20Beer",
+          "searchTerm": "The Dharma Initiative Beer",
+          "match": "auto",
+          "lookupSuccessful": false
+        },
+        "brewery": {
+          "name": "The Dharma Initiative"
+        }
+      }
+    ],
+    "summary": "Next week's test beer is Heavy by Cross Borders Brewing Company",
+    "plusSummary": "Next week's test plus beer is Beer by The Dharma Initiative"
   },
   {
     "pretext": "2 week's test beer is:",
@@ -79,6 +104,7 @@
         "images": [
           "https://beerbods.co.uk/media/4007/2020_may_14_subscription_lost_pier_apa_actually.jpg"
         ],
+        "isPlusBeer": false,
         "untappd": {
           "searchUrl": "https://untappd.com/search?q=Lost%20Pier%20Brewing%20APA%20Actually",
           "searchTerm": "Lost Pier Brewing APA Actually",
@@ -90,7 +116,9 @@
         }
       }
     ],
-    "summary": "2 week's test beer is APA Actually by Lost Pier Brewing"
+    "plusBeers": [],
+    "summary": "2 week's test beer is APA Actually by Lost Pier Brewing",
+    "plusSummary": "2 week's test plus beers are unknown"
   },
   {
     "pretext": "3 week's test beer is:",
@@ -104,6 +132,7 @@
         "images": [
           "https://beerbods.co.uk/media/4011/2020_may_21_subscription_canopy.jpg"
         ],
+        "isPlusBeer": false,
         "untappd": {
           "searchUrl": "https://untappd.com/search?q=Canopy%20Beer%20Co%20Spring%20Classic%20Elderflower%20Saison",
           "searchTerm": "Canopy Beer Co Spring Classic Elderflower Saison",
@@ -115,7 +144,9 @@
         }
       }
     ],
-    "summary": "3 week's test beer is Spring Classic Elderflower Saison by Canopy Beer Co"
+    "plusBeers": [],
+    "summary": "3 week's test beer is Spring Classic Elderflower Saison by Canopy Beer Co",
+    "plusSummary": "3 week's test plus beers are unknown"
   },
   {
     "pretext": "4 week's test beer is:",
@@ -130,6 +161,7 @@
           "https://beerbods.co.uk/media/4021/full_circle_repeater-twb.jpg",
           "https://beerbods.co.uk/media/4020/fcbeer_hawk.jpg"
         ],
+        "isPlusBeer": false,
         "untappd": {
           "searchUrl": "https://untappd.com/search?q=Full%20Circle%20Brew%20Co%20Repeater%20Session%20IPA",
           "searchTerm": "Full Circle Brew Co Repeater Session IPA",
@@ -141,6 +173,8 @@
         }
       }
     ],
-    "summary": "4 week's test beer is Repeater Session IPA by Full Circle Brew Co"
+    "plusBeers": [],
+    "summary": "4 week's test beer is Repeater Session IPA by Full Circle Brew Co",
+    "plusSummary": "4 week's test plus beers are unknown"
   }
 ]
