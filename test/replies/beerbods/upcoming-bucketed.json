@@ -31,6 +31,30 @@
       "altImageUrl": "https://beerbods.co.uk",
       "featuredDate": "2020-05-07T00:00:00",
       "rateBeerId": ""
+    },
+    {
+      "url": "https://beerbods.co.uk/shop/dharma-initiative/beer/",
+      "name": "Beer",
+      "caption": "Beer?",
+      "brewedBy": "The Dharma Initiative",
+      "imageUrl": "https://beerbods.co.uk/media/4815/1623_42.jpg",
+      "altImageUrl": "https://beerbods.co.uk",
+      "featuredDate": "2020-05-07T00:00:00",
+      "rateBeerId": "",
+      "isPlusBeer": true
+    }
+  ],
+  [
+    {
+      "url": "https://beerbods.co.uk/shop/ignored-plus-only-date/",
+      "name": "Plus Only",
+      "caption": "Duff",
+      "brewedBy": "Springfield Elementary",
+      "imageUrl": "https://beerbods.co.uk/media/123.jpg",
+      "altImageUrl": "https://beerbods.co.uk",
+      "featuredDate": "2020-05-13T00:00:00",
+      "rateBeerId": "",
+      "isPlusBeer": true
     }
   ],
   [
@@ -42,7 +66,8 @@
       "imageUrl": "https://beerbods.co.uk/media/4007/2020_may_14_subscription_lost_pier_apa_actually.jpg",
       "altImageUrl": "https://beerbods.co.uk",
       "featuredDate": "2020-05-14T00:00:00",
-      "rateBeerId": "627539"
+      "rateBeerId": "627539",
+      "isPlusBeer": false
     }
   ],
   [

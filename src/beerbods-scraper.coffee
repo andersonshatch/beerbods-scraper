@@ -41,15 +41,12 @@ if fs.existsSync nameOverridePath
 RETRY_ATTEMPT_TIMES = 3
 
 class Config
-	constructor: (@weekDescriptors, @relativeDescriptor, @maxIndex = 3, @untappdCredentials) ->
+	constructor: (@weekDescriptors, @plusWeekDescriptors, @relativeDescriptor, @maxIndex = 3, @untappdCredentials) ->
 
 module.exports.config = Config
 
 class Week
 	constructor: (@title, @href, @imgSrc) ->
-
-filterNonPlusBeers = (beer) ->
-	return !beer.isPlusBeer
 
 fetchBeerbodsData = () ->
 	apiPrevCount = process.env.BEERBODS_REQUEST_PREV_COUNT || 8
@@ -65,7 +62,7 @@ fetchBeerbodsData = () ->
 
 	#bucket by featuredDate to group any multiple beer weeks together, since beerbods API does not group them
 	map = new Map()
-	array = [...(await previous).data.filter(filterNonPlusBeers), featured.data, ...(await upcoming).data.filter(filterNonPlusBeers)]
+	array = [...(await previous).data, featured.data, ...(await upcoming).data]
 	for entry in array
 		date = entry.featuredDate
 		if !map.has date
@@ -98,11 +95,14 @@ module.exports.fetchBeerbodsData = fetchBeerbodsData
 
 module.exports.scrapeBeerbods = (config, beerbodsData, completionHandler) ->
 	output = []
+	skipCount = 0
 	for week, index in beerbodsData
 		if index > config.maxIndex
 			break
 		beers = []
+		plusBeers = []
 		beerTitles = []
+		plusBeerTitles = []
 		for beer in week
 			title = beer.name.trim()
 			brewery = beer.brewedBy.trim()
@@ -116,14 +116,14 @@ module.exports.scrapeBeerbods = (config, beerbodsData, completionHandler) ->
 				if overrides.brewery
 					brewery = overrides.brewery.trim()
 
-			beerTitles.push("#{title} by #{brewery}")
+			(if not beer.isPlusBeer then beerTitles else plusBeerTitles).push("#{title} by #{brewery}")
 
 			searchTerm = "#{brewery} #{title}"
 			images = [beer.imageUrl]
 			if beer.altImageUrl and beer.altImageUrl != beerbodsUrl
 				images.push beer.altImageUrl
 
-			beers.push {
+			(if not beer.isPlusBeer then beers else plusBeers).push {
 				name: title,
 				beerbodsUrl: beer.url,
 				images: images,
@@ -135,11 +135,19 @@ module.exports.scrapeBeerbods = (config, beerbodsData, completionHandler) ->
 				},
 				brewery: {
 					name: brewery
-				}
+				},
+				isPlusBeer: beer.isPlusBeer == true
 			}
 
-		formattedDescriptor = util.format(config.weekDescriptors[index], pluralize('beer', beerTitles.length))
+		if beers.length == 0
+			#Skip adding this if we don't have any non-plus beers
+			skipCount = skipCount + 1
+			continue
+		formattedDescriptor = util.format(config.weekDescriptors[index-skipCount], pluralize('beer', beerTitles.length))
 		prefix = "#{formattedDescriptor} #{pluralize(config.relativeDescriptor, beerTitles.length)}"
+
+		formattedDescriptor = util.format(config.plusWeekDescriptors[index-skipCount], pluralize('beer', plusBeerTitles.length))
+		plusPrefix = "#{formattedDescriptor} #{pluralize(config.relativeDescriptor, plusBeerTitles.length)}"
 
 		output.push {
 			pretext: "#{prefix}:",
@@ -147,7 +155,9 @@ module.exports.scrapeBeerbods = (config, beerbodsData, completionHandler) ->
 			beerbodsUrl: beers[0].beerbodsUrl,
 			beerbodsImageUrl: beers[0].images[0],
 			beers: beers,
-			summary: "#{prefix} #{beerTitles.join(' and/or ')}"
+			summary: "#{prefix} #{beerTitles.join(' and/or ')}",
+			plusBeers: plusBeers,
+			plusSummary: "#{plusPrefix} #{if plusBeerTitles.length > 0 then plusBeerTitles.join(' and/or ') else 'unknown'}"
 		}
 
 	if output.length == 0
@@ -167,20 +177,27 @@ populateUntappdData = (messages, untappd, completionHandler) ->
 	messages.map (a) ->
 		doneAtIteration += a.beers.length
 
-	totalIteration = 0
+	search = util.promisify(searchBeerOnUntappd)
 	output = []
+	jobs = []
 	for message, weekIteration in messages
 		output.push message
 		for beer, beerIteration in message.beers
-			beer.outputIndices = [weekIteration, beerIteration] #context for where to put this back when it returns in the callback
-			searchBeerOnUntappd beer.untappd.searchTerm, beer, untappd, (error, updatedMessage) ->
-				totalIteration = totalIteration + 1
-				outputIndices = updatedMessage.outputIndices
-				output[outputIndices[0]].beers[outputIndices[1]] = updatedMessage
-				delete output[outputIndices[0]].beers[outputIndices[1]].outputIndices #remove context now, not needed in final output
-				if totalIteration == doneAtIteration
-					completionHandler null, output
-					return
+			beer.outputIndices = [weekIteration, beerIteration, false] #context for where to put this back when it returns in the callback
+			jobs.push(search(beer.untappd.searchTerm, beer, untappd))
+
+		for plusBeer, beerIteration in message.plusBeers
+			plusBeer.outputIndices = [weekIteration, beerIteration, true]
+			jobs.push(search(plusBeer.untappd.searchTerm, plusBeer, untappd))
+
+	(await Promise.all(jobs)).map (updatedMessage) ->
+		outputIndices = updatedMessage.outputIndices
+		outputKey = if outputIndices[2] then "plusBeers" else "beers"
+
+		output[outputIndices[0]][outputKey][outputIndices[1]] = updatedMessage
+		delete output[outputIndices[0]][outputKey][outputIndices[1]].outputIndices #remove context now, not needed in final output
+
+	completionHandler null, output
 
 untappdAuthParams = (untappdConfig) ->
 	return "client_id=#{untappdConfig.id}&client_secret=#{untappdConfig.secret}&access_token=#{untappdConfig.accessToken}"

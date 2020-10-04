@@ -6,11 +6,13 @@ util = require "util"
 
 nextConfig = new scraper.config \
   ['This week\'s %s', 'Next week\'s %s', 'In 2 week\'s the %s', 'In 3 week\'s the %s', 'In 4 week\'s the %s'], \
+  ['This week\'s plus %s', 'Next week\'s plus %s', 'In 2 week\'s the plus %s', 'In 3 week\'s the plus %s', 'In 4 week\'s the plus %s'], \
   'is', \
   4
 
 previousConfig = new scraper.config \
   ['Last week\'s %s', '2 week\'s ago the %s', '3 week\'s ago the %s', '4 week\'s ago the %s'],
+  ['Last week\'s plus %s', '2 week\'s ago the plus %s', '3 week\'s ago the plus %s', '4 week\'s ago the plus %s'],
   'was', \
   3
 
