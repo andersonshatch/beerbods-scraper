@@ -4,12 +4,16 @@ util = require('util')
 scraper = require('../src/beerbods-scraper')
 
 describe 'bucket beerbods beers by date and return sorted', ->
+	beerbods = {}
 	beforeEach ->
 		do nock.disableNetConnect
 		beerbods = nock('https://beerbods.co.uk/umbraco/api/beers/')
 		beerbods.get('/previous/?count=8').replyWithFile(200, __dirname + '/replies/beerbods/previous.json')
 		beerbods.get('/featured/').replyWithFile(200, __dirname + '/replies/beerbods/featured.json')
 		beerbods.get('/upcoming/?count=8').replyWithFile(200, __dirname + '/replies/beerbods/upcoming.json')
+
+	afterEach ->
+		expect(beerbods.isDone()).to.be.true
 
 	context 'mis-sorted-input', ->
 		it 'sorts and buckets data', () ->
@@ -47,11 +51,17 @@ describe 'bucket beerbods beers by date and return sorted', ->
 			expect(dates).to.eql(Array.from(dates).sort((d1, d2) -> d1-d2))
 
 
-describe 'beerbods api without untappd credentials', ->
+describe 'beerbods api without valid untappd api', ->
+	beforeEach ->
+		do nock.disableNetConnect
+
+	afterEach ->
+		expect nock.isDone()
+
 	config = new scraper.config(
 		["This week's test", "Next week's test", "2 week's test", "3 week's test", "4 week's test"], \
 		["This week's test plus", "Next week's test plus", "2 week's test plus", "3 week's test plus", "4 week's test plus"], \
-		"is", '/thebeers')
+		"is", 5, {clientId: 'dummy-id', clientSecret: 'dummy-secret'})
 
 	context 'mock beerbods upcoming beers', ->
 		beerbodsInput = require __dirname + '/replies/beerbods/upcoming-bucketed.json'
