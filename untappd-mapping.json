@@ -295,6 +295,18 @@
     {
       "beerbodsName": "fallen brewing co. chew chew",
       "untappdId": 928396
+    },
+    {
+      "beerbodsName": "brouwerij de koningshoeven la trappe quadrupel",
+      "untappdId": 1830
+    },
+    {
+      "beerbodsName": "salt beer factory dex",
+      "untappdId": 3720415
+    },
+    {
+      "beerbodsName": "to øl sur citra",
+      "untappdId": 1065492
     }
   ]
 }
