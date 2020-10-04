@@ -62,7 +62,7 @@
         "untappd": {
           "searchUrl": "https://untappd.com/search?q=Cross%20Borders%20Brewing%20Company%20Heavy",
           "searchTerm": "Cross Borders Brewing Company Heavy",
-          "match": "auto",
+          "match": "manual",
           "lookupSuccessful": false
         },
         "brewery": {
