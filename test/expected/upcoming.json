@@ -44,6 +44,7 @@
     ],
     "plusBeers": [],
     "summary": "This week's test beers are Extra Special by Good Chemistry Brewing and/or C Bomb by Arbor Ales",
+    "plusPretext": "This week's test plus beers are:",
     "plusSummary": "This week's test plus beers are unknown"
   },
   {
@@ -90,6 +91,7 @@
       }
     ],
     "summary": "Next week's test beer is Heavy by Cross Borders Brewing Company",
+    "plusPretext": "Next week's test plus beer is:",
     "plusSummary": "Next week's test plus beer is Beer by The Dharma Initiative"
   },
   {
@@ -118,6 +120,7 @@
     ],
     "plusBeers": [],
     "summary": "2 week's test beer is APA Actually by Lost Pier Brewing",
+    "plusPretext": "2 week's test plus beers are:",
     "plusSummary": "2 week's test plus beers are unknown"
   },
   {
@@ -146,6 +149,7 @@
     ],
     "plusBeers": [],
     "summary": "3 week's test beer is Spring Classic Elderflower Saison by Canopy Beer Co",
+    "plusPretext": "3 week's test plus beers are:",
     "plusSummary": "3 week's test plus beers are unknown"
   },
   {
@@ -175,6 +179,7 @@
     ],
     "plusBeers": [],
     "summary": "4 week's test beer is Repeater Session IPA by Full Circle Brew Co",
+    "plusPretext": "4 week's test plus beers are:",
     "plusSummary": "4 week's test plus beers are unknown"
   }
 ]
