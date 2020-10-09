@@ -157,6 +157,7 @@ module.exports.scrapeBeerbods = (config, beerbodsData, completionHandler) ->
 			beers: beers,
 			summary: "#{prefix} #{beerTitles.join(' and/or ')}",
 			plusBeers: plusBeers,
+			plusPretext: "#{plusPrefix}:",
 			plusSummary: "#{plusPrefix} #{if plusBeerTitles.length > 0 then plusBeerTitles.join(' and/or ') else 'unknown'}"
 		}
 
