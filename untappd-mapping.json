@@ -311,6 +311,14 @@
     {
       "beerbodsName": "deep creek brewing haze",
       "untappdId": 3809613
+    },
+    {
+      "beerbodsName": "belching beaver peanut butter milk stout nitro",
+      "untappdId": 3089057
+    },
+    {
+      "beerbodsName": "schlenkerla rauchbier marzen",
+      "untappdId": 471
     }
   ]
 }
