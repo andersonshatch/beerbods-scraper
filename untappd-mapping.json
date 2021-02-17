@@ -375,6 +375,14 @@
     {
       "beerbodsName": "vocation brewery bread and butter",
       "untappdId": 1053458
+    },
+    {
+      "beerbodsName": "goose island beer company obadiah poundage",
+      "untappdId": 2606788
+    },
+    {
+      "beerbodsName": "loch lomond brewery silkie stout",
+      "untappdId": 237242
     }
   ]
 }
