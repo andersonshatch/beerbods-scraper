@@ -28,7 +28,7 @@
     "test-unit": "mocha --require coffeescript/register test/*.coffee"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
+    "chai": "^4.3.4",
     "coffeescript": "^2.5.1",
     "mocha": "^8.3.1",
     "nock": "^13.0.11"
