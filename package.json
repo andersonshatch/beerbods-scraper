@@ -30,7 +30,7 @@
   "devDependencies": {
     "chai": "^4.3.4",
     "coffeescript": "^2.5.1",
-    "mocha": "^8.3.1",
+    "mocha": "^8.3.2",
     "nock": "^13.0.11"
   }
 }
