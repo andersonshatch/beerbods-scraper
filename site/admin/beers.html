@@ -20,6 +20,8 @@
                         var textClass = '';
                         if (!beer.untappd.lookupSuccessful) {
                             textClass = 'text-danger';
+                        } else if (beer.untappd.lookupStale) {
+                            textClass = 'text-warning';
                         }
                         output += `<div class="row"><h1 class="${textClass}">${week.pretext}`;
                         if (!beer.untappd.lookupSuccessful) {
@@ -29,7 +31,7 @@
                         if (!beer.untappd.lookupSuccessful) {
                             output += '🤷';
                         }
-                        output += `</h1><h2><a href="${beer.untappd.searchUrl}">${beer.untappd.searchTerm.toLowerCase()}</a></h2></div>`;
+                        output += `</h1><h2 class="user-select-all"><a href="${beer.untappd.searchUrl}">${beer.untappd.searchTerm.toLowerCase()}</a></h2></div>`;
                     }
                 }
                 elem.innerHTML = output;
