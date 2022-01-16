@@ -463,6 +463,10 @@
     {
       "untappdId": 25784,
       "beerbodsName": "kostritzer schwarzbier"
+    },
+    {
+      "beerbodsName": "little creatures little creatures pale ale",
+      "untappdId": 8262
     }
   ]
 }
