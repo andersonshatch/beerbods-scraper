@@ -475,6 +475,10 @@
     {
       "beerbodsName": "magic rock brewing co dark arts",
       "untappdId": 60245
+    },
+    {
+      "untappdId": 660366,
+      "beerbodsName": "st. bernardus brewery grottenbier"
     }
   ]
 }
