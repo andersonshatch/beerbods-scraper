@@ -479,6 +479,10 @@
     {
       "untappdId": 660366,
       "beerbodsName": "st. bernardus brewery grottenbier"
+    },
+    {
+      "beerbodsName": "brass castle bad kitty",
+      "untappdId": 78942
     }
   ]
 }
