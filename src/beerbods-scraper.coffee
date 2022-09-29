@@ -62,7 +62,7 @@ fetchBeerbodsData = () ->
 
 	#bucket by featuredDate to group any multiple beer weeks together, since beerbods API does not group them
 	map = new Map()
-	array = [...(await previous).data, featured.data, ...(await upcoming).data]
+	array = [...(await previous).data or [], featured.data, ...(await upcoming).data or []]
 	for entry in array
 		date = entry.featuredDate
 		if !map.has date
