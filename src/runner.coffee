@@ -35,6 +35,7 @@ scrape = () ->
 			images: ['https://andersonshatch.com']
 			untappd: {
 				detailUrl: "https://untappd.com",
+				mobileDeepUrl: "https://untappd.com",
 				searchUrl: "https://untappd.com"
 			}
 		}],
