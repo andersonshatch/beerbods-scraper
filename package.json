@@ -15,7 +15,7 @@
     "url": "https://github.com/andersonshatch/beerbods-scraper"
   },
   "dependencies": {
-    "cheerio": "0.22.0",
+    "cheerio": "1.0.0-rc.12",
     "got": "^11.8.2",
     "humanize": "0.0.9",
     "pluralize": "^8.0.0",
