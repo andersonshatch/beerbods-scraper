@@ -32,6 +32,7 @@ scrape = () ->
 				name: "Sad",
 				logo: "https://andersonshatch.com"
 			},
+			images: ['https://andersonshatch.com']
 			untappd: {
 				detailUrl: "https://untappd.com",
 				searchUrl: "https://untappd.com"
